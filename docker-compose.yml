@@ -14,3 +14,15 @@ services:
         depends_on:
             - web
             
+    db:
+        image: mongo:7.0.16
+        volumes:
+            - swal_mongo:/data/db
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+            - MONGO_INITDB_ROOT_PASSWORD=secret
+            
+            
+volumes:
+    swal_mongo:
+            
