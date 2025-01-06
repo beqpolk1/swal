@@ -13,6 +13,9 @@ services:
         build: ./services/nginx
         ports:
             - 7007:80
+        volumes:
+            - ./services/web/static:/www/app/static
+            - ./services/web/user:/www/user
         depends_on:
             - web
             
