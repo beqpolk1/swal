@@ -1,3 +1,4 @@
 * nginx <-> web TLS
 * web <-> mongo TLS
 * mongo default credentials -> secure storage
+* don't allow nginx to serve sensitive static content (e.g. .env)
