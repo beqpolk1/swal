@@ -3,9 +3,11 @@ services:
         build: ./services/web
         command: gunicorn --reload -w 4 -b 0.0.0.0:42069 app:app
         volumes:
-            - ./services/web:/app
+            - ./services/web:/www/app
         expose:
             - 42069
+        depends_on:
+            - db
             
     nginx:
         build: ./services/nginx
