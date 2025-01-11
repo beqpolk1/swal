@@ -15,7 +15,7 @@ services:
             - 7007:80
         volumes:
             - ./services/web/static:/www/app/static
-            - ./services/web/user:/www/user
+            - ./services/web/user_dev:/www/user
         depends_on:
             - web
             
