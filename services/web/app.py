@@ -25,7 +25,7 @@ def statictest():
 
 @app.route('/mediatest')
 def mediatest():
-    return redirect(url_for('media', filename='img/escher06_butterflies.jpg'))
+    return redirect(url_for('media', filename='img/media_test.jpg'))
 
 if __name__ == '__main__':
     app.run()
