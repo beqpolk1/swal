@@ -1,0 +1,22 @@
+services:
+    web:
+        build: 
+            context: ./services/web
+            dockerfile: Dockerfile.prod
+            
+    nginx:
+        build: 
+            context: ./services
+            dockerfile: ./nginx/Dockerfile.prod
+        volumes:
+            - user_prod:/www/user
+            
+    db:
+        volumes:
+            - mongo_prod:/data/db
+            
+            
+volumes:
+    user_prod:
+    mongo_prod:
+            
