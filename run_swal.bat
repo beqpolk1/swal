@@ -1,0 +1,1 @@
+docker-compose -p swal -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build
