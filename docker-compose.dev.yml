@@ -22,12 +22,12 @@ services:
     db:
         image: mongo:7.0.16
         volumes:
-            - swal_mongo_dev:/data/db
+            - mongo_dev:/data/db
         environment:
             - MONGO_INITDB_ROOT_USERNAME=mongoadmin
             - MONGO_INITDB_ROOT_PASSWORD=secret
             
             
 volumes:
-    swal_mongo_dev:
+    mongo_dev:
             
