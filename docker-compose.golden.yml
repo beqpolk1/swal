@@ -1,0 +1,13 @@
+services:
+    nginx:
+        volumes:
+            - ./services/web/user_golden:/www/user
+            
+    db:
+        volumes:
+            - mongo_golden:/data/db
+            
+            
+volumes:
+    mongo_golden:
+            
