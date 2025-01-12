@@ -1,1 +1,1 @@
-docker-compose -p swal-golden -f docker-compose.dev.yml -f docker-compose.golden.yml up -d
+docker-compose -p swal-golden -f docker-compose.dev.yml -f docker-compose.golden.yml up -d --build
