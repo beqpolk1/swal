@@ -1,0 +1,7 @@
+# Ignore any compiled Python files
+*.pyc
+__pycache__/
+
+static/
+user_dev/
+user_golden/
