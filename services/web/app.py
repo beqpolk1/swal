@@ -1,5 +1,7 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 from pymongo import MongoClient
+
+from modules import index
 
 ################################################
 # app startup/config
@@ -19,10 +21,6 @@ mongoClient = MongoClient(app.config["MONGO_URI"])
 def media():
     return
 
-@app.route('/')
-def hello_world():
-    return 'Hello World - this is Flasky McFlask Face<br />2'
-
 @app.route('/dbtest')
 def dbtest():
     mongoClient.admin.command('ping')
@@ -39,6 +37,9 @@ def mediatest():
 ################################################
 # external module routes
 ################################################
+
+app.add_url_rule('/', 'index', index) 
+
 
 if __name__ == '__main__':
     app.run()
