@@ -28,7 +28,7 @@ def dbtest():
 
 @app.route('/statictest')
 def statictest():
-    return redirect(url_for('static', filename='test.txt'))
+    return redirect(url_for('static', filename = 'test.txt'))
 
 @app.route('/mediatest')
 def mediatest():
@@ -38,7 +38,7 @@ def mediatest():
 # external module routes
 ################################################
 
-app.add_url_rule('/', 'index', index) 
+app.add_url_rule('/', 'index', index)
 
 
 if __name__ == '__main__':
