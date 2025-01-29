@@ -1,3 +1,7 @@
 {% macro static_file(subdir, filename) %}
-    {{ url_for('static', filename=subdir ~ '/' ~ filename) }}
+    {{ url_for('static', filename = subdir ~ '/' ~ filename) }}
+{% endmacro %}
+
+{% macro media_file(subdir, filename) %}
+    {{ url_for('media', filename = subdir ~ '/' ~ filename)}}
 {% endmacro %}

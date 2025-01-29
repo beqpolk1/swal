@@ -9,7 +9,6 @@ from modules import index
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://db:27017/"
-app.config["MEDIA_IMG"] = "img/"
 
 mongoClient = MongoClient(app.config["MONGO_URI"])
 
@@ -32,7 +31,7 @@ def statictest():
 
 @app.route('/mediatest')
 def mediatest():
-    return redirect(url_for('media', filename = app.config["MEDIA_IMG"] + 'media_test.jpg'))
+    return redirect(url_for('media', filename = 'img/media_test.jpg'))
 
 ################################################
 # external module routes
