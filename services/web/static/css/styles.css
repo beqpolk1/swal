@@ -1,10 +1,13 @@
-div.title h1 {
-    margin-bottom: 0px;
+div.title {
+    margin: 10px 0px;
 }
 
-div.title p {
+div.title > h1 {
     margin: 0px;
-    padding-top: 5px;
+}
+
+div.title > p {
+    margin: 5px 0px 0px 0px;
 }
 
 span.first_lett {
