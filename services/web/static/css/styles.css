@@ -1,0 +1,26 @@
+div.title h1 {
+    margin-bottom: 0px;
+}
+
+div.title p {
+    margin: 0px;
+    padding-top: 5px;
+}
+
+span.first_lett {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+div.top_menu {
+    margin: 5px;
+    margin-left: 0px;
+}
+
+div.top_menu_item {
+    padding: 5px;
+}
+
+div.top_menu_item:first-child {
+    padding-left: 0px;
+}
