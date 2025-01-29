@@ -3,7 +3,9 @@
 {% block title %}SWaL - Home{% endblock %}
 
 {% block body %}
-    <h1>Welcome to Stuff Worth a Listen</h1>
+    {% include 'std_head.html.j2' %}
+
+    <h1>Welcome</h1>
     <p>Choose what to do next</p>
     <p>(my random number is {{ rand }})</p>
 {% endblock %}
