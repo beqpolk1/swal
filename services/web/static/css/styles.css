@@ -15,12 +15,31 @@ span.first_lett {
 div.top_menu {
     margin: 5px;
     margin-left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-div.top_menu_item {
-    padding: 5px;
+a.top_menu_item {
+    padding: 8px 15px 8px 15px;
+    background-color: #dddddd;
+    border-color: black;
+    border-width: 2px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    color: black;
 }
 
-div.top_menu_item:first-child {
-    padding-left: 0px;
+a.top_menu_item:visited {
+    color: black;
+}
+
+a.top_menu_item:hover {
+    background-color: #222222;
+    color: #dddddd;
+}
+
+a.top_menu_item:first-child {
+    border-style: solid;
 }
