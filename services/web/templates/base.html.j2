@@ -1,8 +1,10 @@
+{% import "macros.html.j2" as macros %}
 <!DOCTYPE html>
 <html>
 
 <head>
     {% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ macros.static_file('css', 'styles.css') }}">
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
