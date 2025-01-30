@@ -1,11 +1,14 @@
 services:
     web:
         build: ./services/web
-        command: gunicorn --reload -w 4 -b 0.0.0.0:42069 app:app
+        command: flask run --host=0.0.0.0 --port=42069 --debug
         volumes:
             - ./services/web:/www/app
         expose:
             - 42069
+        environment:
+            - FLASK_APP=app
+            - FLASK_ENV=development
         depends_on:
             - db
             
