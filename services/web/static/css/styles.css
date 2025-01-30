@@ -1,0 +1,48 @@
+div.title {
+    margin: 10px 0px;
+}
+
+div.title > h1 {
+    margin: 0px;
+}
+
+div.title > p {
+    margin: 5px 0px 0px 0px;
+}
+
+span.first_lett {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+div.top_menu {
+    margin: 5px;
+    margin-left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+a.top_menu_item {
+    padding: 8px 15px 8px 15px;
+    background-color: #dddddd;
+    border-color: black;
+    border-width: 2px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    color: black;
+}
+
+a.top_menu_item:visited {
+    color: black;
+}
+
+a.top_menu_item:hover {
+    background-color: #222222;
+    color: #dddddd;
+}
+
+a.top_menu_item:first-child {
+    border-style: solid;
+}
