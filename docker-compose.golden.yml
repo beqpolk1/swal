@@ -1,4 +1,10 @@
 services:
+    web:
+        command: gunicorn --reload -w 4 -b 0.0.0.0:42069 app:app
+        environment:
+            - FLASK_APP=
+            - FLASK_ENV=
+        
     nginx:
         volumes:
             - ./services/web/user_golden:/www/user
