@@ -1,5 +1,9 @@
+body {
+    margin: 0px;
+}
+
 div.title {
-    margin: 10px 0px;
+    margin: 10px 10px 0px 10px;
 }
 
 div.title > h1 {
@@ -18,7 +22,7 @@ span.first_lett {
 div.top_menu_wrapper {
     width: 100%;
     background-color: #dddddd;
-    border-style: solid;
+    border-style: solid none;
     border-width: 2px;
     margin: 5px 0px 5px 0px;
 }
@@ -48,4 +52,8 @@ div.top_menu_item_text {
     border-color: black;
     border-width: 2px;
     border-right-style: solid;
+}
+
+div.content {
+    margin: 0px 10px 0px 10px;
 }
