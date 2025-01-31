@@ -4,8 +4,12 @@
 
 {% block body %}
     {% include 'std_head.html.j2' %}
+    {{ super() }}
+{% endblock %}
 
+{% block content %}
     <h1>Welcome</h1>
     <p>Choose what to do next</p>
     <p>(my random number is {{ rand }})</p>
 {% endblock %}
+
