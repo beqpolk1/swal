@@ -15,23 +15,23 @@ span.first_lett {
     font-size: 1.2em;
 }
 
+div.top_menu_wrapper {
+    width: 100%;
+    background-color: #dddddd;
+    border-style: solid;
+    border-width: 2px;
+    margin: 5px 0px 5px 0px;
+}
+
 div.top_menu {
-    margin: 5px;
-    margin-left: 0px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 }
 
 a.top_menu_item {
-    padding: 8px 15px 8px 15px;
-    background-color: #dddddd;
-    border-color: black;
-    border-width: 2px;
-    border-top-style: solid;
-    border-bottom-style: solid;
-    border-right-style: solid;
     color: black;
+    padding: 7px 0px 7px 0px;
 }
 
 a.top_menu_item:visited {
@@ -43,6 +43,9 @@ a.top_menu_item:hover {
     color: #dddddd;
 }
 
-a.top_menu_item:first-child {
-    border-style: solid;
+div.top_menu_item_text {
+    padding: 8px 15px 8px 15px;
+    border-color: black;
+    border-width: 2px;
+    border-right-style: solid;
 }
