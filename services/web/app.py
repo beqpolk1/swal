@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for
 from pymongo import MongoClient
 
-from modules import index
+from modules import index, add_entry
 
 ################################################
 # app startup/config
@@ -38,6 +38,7 @@ def mediatest():
 ################################################
 
 app.add_url_rule('/', 'index', index)
+app.add_url_rule('/add_entry', 'add_entry', add_entry)
 
 
 if __name__ == '__main__':
