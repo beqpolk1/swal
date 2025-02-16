@@ -37,7 +37,7 @@ def mediatest():
 # external module routes
 ################################################
 
-app.add_url_rule('/', 'index', index)
+app.add_url_rule('/', 'index', index, methods = ['GET'])
 app.add_url_rule('/add_entry/<string:mode>', 'add_entry', add_entry, methods = ['GET'])
 
 
