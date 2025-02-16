@@ -23,6 +23,10 @@
     </div>
 
     <div class="add_form">
+        {% if mode == "single" %}
         {% include "single_add_form.html.j2" %}
+        {% else %}
+        <p>Choose an add mode</p>
+        {% endif %}
     </div>
 {% endblock %}
