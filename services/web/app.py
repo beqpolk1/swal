@@ -38,7 +38,7 @@ def mediatest():
 ################################################
 
 app.add_url_rule('/', 'index', index, methods = ['GET'])
-app.add_url_rule('/add_entry/<string:mode>', 'add_entry', add_entry, methods = ['GET'])
+app.add_url_rule('/add_entry/<string:mode>', 'add_entry', add_entry, methods = ['GET', 'POST'])
 
 
 if __name__ == '__main__':
