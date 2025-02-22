@@ -22,11 +22,26 @@
         </div>
     </div>
 
-    <div class="add_form">
+    {% if request.method == "GET" %}
+    <div class="add_form">        
         {% if mode == "single" %}
-        {% include "single_add_form.html.j2" %}
+            {% include "single_add_form.html.j2" %}
         {% else %}
         <p>Choose an add mode</p>
         {% endif %}
     </div>
+    
+    {% elif request.method == "POST" %}
+    <div class="add_result">
+        {% if result.errors|length == 0 %}
+            {{ result.status }}
+        {% else %}
+        <ul class="add_errors">
+            {% for error in result.errors %}
+            <li>Error {{ error.code }} - {{ error.msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endif %}
 {% endblock %}
