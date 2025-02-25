@@ -13,6 +13,7 @@ def perform_add_entry(form_data : dict) -> Job_Status:
 
         _perform_db_add(new_entry)
         result.status = str(new_entry)
+        result.success = True
     else:
         result.status = "failed"
 

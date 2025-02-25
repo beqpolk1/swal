@@ -33,7 +33,7 @@
     
     {% elif request.method == "POST" %}
     <div class="add_result">
-        {% if result.errors|length == 0 %}
+        {% if result.success %}
             {{ result.status }}
         {% else %}
         <ul class="add_errors">
