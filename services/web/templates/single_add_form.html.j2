@@ -28,8 +28,12 @@
     </div>
 
     <div class="form_upload">
-        <label for="artwork">Artwork file:</label><br>
-        <input type="file" id="artwork" name="artwork"><br>
+        <label for="artwork_file">Paste or upload artwork file:</label><br>
+        <p>Use Ctrl + V to paste</p>
+        <input type="file" id="artwork_file" name="artwork_file"><br>
+        <div id="artwork" class="artwork artwork_empty">
+            <img id="artwork_preview" class="hidden">
+        </div>
     </div>
 
     <div class="form_checkbox">
