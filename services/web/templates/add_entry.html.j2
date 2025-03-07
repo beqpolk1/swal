@@ -2,6 +2,10 @@
 
 {% block title %}SWaL - Add Entry{% endblock %}
 
+{% block scripts %}
+    <script src="{{ macros.static_file('js', 'add_entry.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
     {% include 'std_head.html.j2' %}
     {{ super() }}
