@@ -1,14 +1,23 @@
-document.addEventListener('paste', async (e) => {
-    e.preventDefault();
-    console.log(e.clipboardData.files.length);
-    
-    for (const clipboardItem of e.clipboardData.files) {
-        if (clipboardItem.type.startsWith('image/')) {
-            console.log('image in cb');
-		    previewImage(clipboardItem);
-            document.getElementById("artwork_file").value = null;
-            return;
+document.getElementById("artwork_paste").addEventListener('click', async (e) => {
+    try {
+        const clipboardItems = await navigator.clipboard.read();
+        console.log(clipboardItems.length);
+
+        for (const clipboardItem of clipboardItems) {
+            const itemImageType = Array.from(clipboardItem.types).find(type => type.startsWith('image/'));
+
+            if (itemImageType) {
+                console.log('image in cb');
+
+                const imageBlob = await clipboardItem.getType(itemImageType);
+                previewImage(imageBlob);
+
+                document.getElementById("artwork_file").value = null;
+                return;
+            }
         }
+    } catch (err) {
+        console.error(err.name, err.message);
     }
 });
 
