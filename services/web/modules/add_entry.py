@@ -7,5 +7,5 @@ def add_entry(mode : str):
         return render_template("add_entry.html.j2", mode = mode)
     
     elif (request.method == "POST"):
-        add_result = perform_add_entry(request.form)
+        add_result = perform_add_entry(request.form, request.files)
         return render_template("add_entry.html.j2", result = add_result)

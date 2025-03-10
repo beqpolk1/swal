@@ -1,13 +1,12 @@
 class Entry:
-    def __init__(self, artist, album, release_year, genre, interest, starred, obtained, link):
-        self.artist = artist
-        self.album = album
-        self.release_year = release_year
-        self.genre = genre
-        self.interest = interest
-        self.starred = starred
-        self.obtained = obtained
-        self.link = link
+    def __init__(self, new_vals, new_files):
+        self.artist = new_vals.get("artist") or None
+        self.album = new_vals.get("album") or None
+        self.release_year = new_vals.get("release_year") or None
+        self.genre = new_vals.get("genre") or None
+        self.interest = new_vals.get("interest_level")
+        self.starred = new_vals.get("is_starred")
+        self.obtained = new_vals.get("is_obtained")
 
     def __str__(self):
         all_attr = {
