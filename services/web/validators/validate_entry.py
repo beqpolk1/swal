@@ -10,6 +10,7 @@ def validate_entry(new_entry : Entry) -> list:
     _validate_genre(new_entry.genre, errors)
     _validate_interest_level(new_entry.interest, errors)
     _validate_starred(new_entry.starred, errors)
+    _validate_artwork(new_entry.artwork_file_name, new_entry.artwork_file, errors)
     _validate_obtained(new_entry.obtained, errors)
     _validate_link(new_entry.link, errors)
 
@@ -88,6 +89,19 @@ def _validate_starred(starred, errors):
                 starred = bool(starred)
             except:
                 errors.append({"code": "A14", "msg": "Starred must be true or false"})
+
+def _validate_artwork(artwork, artwork_file, errors):
+    if (artwork != None):
+        if (not isinstance(artwork, str)):
+            try:
+                artwork = str(artwork)
+            except:
+                errors.append({"code": "A19", "msg": "artwork file name must be a string"})
+    
+    #if ((artwork != None and not artwork_file) or (artwork == None and artwork_file)):
+     #   errors.append({"code": "A20", "msg": "artwork file name and artwork file must both be present"})
+        
+
 
 def _validate_obtained(obtained, errors):
     if (obtained != None):
