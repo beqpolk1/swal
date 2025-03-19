@@ -1,34 +1,38 @@
-document.getElementById("artwork_paste").addEventListener('click', async (e) => {
-    try {
-        const clipboardItems = await navigator.clipboard.read();
-        console.log(clipboardItems.length);
+if (document.getElementById("artwork_paste")) {
+    document.getElementById("artwork_paste").addEventListener('click', async (e) => {
+        try {
+            const clipboardItems = await navigator.clipboard.read();
+            console.log(clipboardItems.length);
 
-        for (const clipboardItem of clipboardItems) {
-            const itemImageType = Array.from(clipboardItem.types).find(type => type.startsWith('image/'));
+            for (const clipboardItem of clipboardItems) {
+                const itemImageType = Array.from(clipboardItem.types).find(type => type.startsWith('image/'));
 
-            if (itemImageType) {
-                const imageBlob = await clipboardItem.getType(itemImageType);
-                console.log('image in cb - ' + itemImageType + ' - ' + imageBlob.size);
-                
-                document.getElementById("artwork_file").value = null;
-                processPastedImage(imageBlob);                
- 
-                return;
+                if (itemImageType) {
+                    const imageBlob = await clipboardItem.getType(itemImageType);
+                    console.log('image in cb - ' + itemImageType + ' - ' + imageBlob.size);
+                    
+                    document.getElementById("artwork_file").value = null;
+                    processPastedImage(imageBlob);                
+    
+                    return;
+                }
             }
+        } catch (err) {
+            console.error(err.name, err.message);
         }
-    } catch (err) {
-        console.error(err.name, err.message);
-    }
-});
+    });
+}
 
-document.getElementById("artwork_file").addEventListener('change', (e) => {
-    const uplFile = document.getElementById("artwork_file").files[0];
+if (document.getElementById("artwork_file")) {
+    document.getElementById("artwork_file").addEventListener('change', (e) => {
+        const uplFile = document.getElementById("artwork_file").files[0];
 
-    if (uplFile.type.startsWith('image/')) {
-        console.log('image uploaded - ' + uplFile.type + ' - ' + uplFile.size);
-        processPastedImage(uplFile);
-    }
-});
+        if (uplFile.type.startsWith('image/')) {
+            console.log('image uploaded - ' + uplFile.type + ' - ' + uplFile.size);
+            processPastedImage(uplFile);
+        }
+    });
+}
 
 async function processPastedImage(pasteImage, maxSize = 800, quality = .89) {
     return new Promise((resolve) => {
