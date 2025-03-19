@@ -12,7 +12,7 @@ if (document.getElementById("artwork_paste")) {
                     console.log('image in cb - ' + itemImageType + ' - ' + imageBlob.size);
                     
                     document.getElementById("artwork_file").value = null;
-                    processPastedImage(imageBlob);                
+                    processArtworkImage(imageBlob);                
     
                     return;
                 }
@@ -29,7 +29,7 @@ if (document.getElementById("artwork_file")) {
 
         if (uplFile.type.startsWith('image/')) {
             console.log('image uploaded - ' + uplFile.type + ' - ' + uplFile.size);
-            processPastedImage(uplFile);
+            processArtworkImage(uplFile);
         }
     });
 }
@@ -47,7 +47,7 @@ if (document.getElementById("artwork_clear")) {
     });
 }
 
-async function processPastedImage(pasteImage, maxSize = 800, quality = .89) {
+async function processArtworkImage(pasteImage, maxSize = 800, quality = .89) {
     return new Promise((resolve) => {
         const reader = new FileReader();
         
