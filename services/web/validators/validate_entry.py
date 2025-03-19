@@ -98,10 +98,8 @@ def _validate_artwork(artwork, artwork_file, errors):
             except:
                 errors.append({"code": "A19", "msg": "artwork file name must be a string"})
     
-    #if ((artwork != None and not artwork_file) or (artwork == None and artwork_file)):
-     #   errors.append({"code": "A20", "msg": "artwork file name and artwork file must both be present"})
-        
-
+    if ((artwork != None and not artwork_file) or (artwork == None and artwork_file)):
+        errors.append({"code": "A20", "msg": "artwork file name and artwork file must both be present"})
 
 def _validate_obtained(obtained, errors):
     if (obtained != None):
