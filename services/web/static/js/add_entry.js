@@ -7,12 +7,12 @@ document.getElementById("artwork_paste").addEventListener('click', async (e) => 
             const itemImageType = Array.from(clipboardItem.types).find(type => type.startsWith('image/'));
 
             if (itemImageType) {
-                console.log('image in cb');
-
                 const imageBlob = await clipboardItem.getType(itemImageType);
-                previewImage(imageBlob);
-
+                console.log('image in cb - ' + itemImageType + ' - ' + imageBlob.size);
+                
                 document.getElementById("artwork_file").value = null;
+                processPastedImage(imageBlob);                
+ 
                 return;
             }
         }
@@ -23,8 +23,71 @@ document.getElementById("artwork_paste").addEventListener('click', async (e) => 
 
 document.getElementById("artwork_file").addEventListener('change', (e) => {
     const uplFile = document.getElementById("artwork_file").files[0];
-    if (uplFile) previewImage(uplFile);
+
+    if (uplFile.type.startsWith('image/')) {
+        console.log('image uploaded - ' + uplFile.type + ' - ' + uplFile.size);
+        processPastedImage(uplFile);
+    }
 });
+
+async function processPastedImage(pasteImage, maxSize = 800, quality = .89) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+            const img = new Image();
+
+            img.onload = function() {
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxSize) {
+                    height *= maxSize / width;
+                    width = maxSize;
+                }
+                if (height > maxSize) {
+                    width = maxSize / height;
+                    height = maxSize;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = maxSize;
+                canvas.height = maxSize;
+                const canvasContext = canvas.getContext('2d');
+                canvasContext.drawImage(img, 0, 0, maxSize, maxSize);
+
+                canvas.toBlob(
+                    (blob) => {
+                        const fileInput = document.getElementById("artwork_file");
+                        let newName;
+
+                        if (fileInput.value) { 
+                            newName = fileInput.files[0].name;
+                            newName = newName.substring(0, newName.lastIndexOf(".")) + ".jpg";
+                        }
+                        else { 
+                            newName = "pasted_image.jpg"; 
+                        }
+                        const processedImage = new File([blob], newName, { type: "image/jpeg" });
+
+                        console.log('processed - ' + processedImage.type + ' - ' + processedImage.size );
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(processedImage);
+                        document.getElementById("artwork_file").files = dataTransfer.files;
+                        previewImage(processedImage);
+                        //resolve(processedImage);
+                    },
+                    "image/jpeg",
+                    quality
+                );
+            };
+
+            img.src = event.target.result;
+        };
+
+        reader.readAsDataURL(pasteImage);
+    });
+}
 
 function previewImage(imgFile) {
 	let reader = new FileReader();
