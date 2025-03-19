@@ -34,6 +34,19 @@ if (document.getElementById("artwork_file")) {
     });
 }
 
+if (document.getElementById("artwork_clear")) {
+    document.getElementById("artwork_clear").addEventListener('click', (e) => {
+        document.getElementById("artwork_file").value = null;
+
+        imgDisplay = document.getElementById("artwork_preview");
+		imgDisplay.src = null;
+        if (!imgDisplay.classList.contains("hidden")) imgDisplay.classList.add("hidden");
+        
+        pasteField = document.getElementById("artwork");
+        if (!pasteField.classList.contains("artwork_empty")) pasteField.classList.add("artwork_empty");
+    });
+}
+
 async function processPastedImage(pasteImage, maxSize = 800, quality = .89) {
     return new Promise((resolve) => {
         const reader = new FileReader();
