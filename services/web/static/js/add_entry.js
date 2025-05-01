@@ -68,10 +68,10 @@ async function processArtworkImage(pasteImage, maxSize = 800, quality = .89) {
                 }
 
                 const canvas = document.createElement('canvas');
-                canvas.width = maxSize;
-                canvas.height = maxSize;
+                canvas.width = width;
+                canvas.height = height;
                 const canvasContext = canvas.getContext('2d');
-                canvasContext.drawImage(img, 0, 0, maxSize, maxSize);
+                canvasContext.drawImage(img, 0, 0, width, height);
 
                 canvas.toBlob(
                     (blob) => {
