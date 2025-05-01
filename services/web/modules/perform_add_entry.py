@@ -18,6 +18,7 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
 
         _perform_db_add(new_entry)
         result.status = str(new_entry)
+        result.new_img = new_entry.artwork_file_name
         result.success = True
     else:
         result.status = "failed"

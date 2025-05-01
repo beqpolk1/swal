@@ -39,6 +39,7 @@
     <div class="add_result">
         {% if result.success %}
             {{ result.status }}
+        <img src="{{ macros.media_file('img', result.new_img) }}">
         {% else %}
         <ul class="add_errors">
             {% for error in result.errors %}
