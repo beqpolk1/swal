@@ -1,5 +1,6 @@
 from classes import Entry, Job_Status
 from validators import validate_entry_data
+from .db_interface import add_entry_to_db
 import os, uuid, ftplib
 
 def perform_add_entry(form_data, files_data) -> Job_Status:
@@ -14,8 +15,8 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
             new_entry.artwork_file_name = _perform_artwork_add(new_entry.artwork_file_name, new_entry.artwork_file)
             result.status = "artwork uploaded"
 
-        _perform_db_add(new_entry)
-        result.status = str(new_entry)
+        new_entry_id = _perform_db_add(new_entry)
+        result.status = new_entry_id
         result.new_img = new_entry.artwork_file_name
         result.success = True
     else:
@@ -41,5 +42,5 @@ def _perform_artwork_add(filename : str, file) -> str:
     return new_filename
 
 def _perform_db_add(new_entry : Entry):
-    pass
+    return add_entry_to_db(new_entry)
 
