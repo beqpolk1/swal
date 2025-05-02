@@ -11,8 +11,8 @@ class Entry:
         self.artwork_file_name = new_files.get("artwork_file").filename or None
         self.artwork_file = new_files.get("artwork_file")
 
-    def __str__(self):
-        all_attr = {
+    def to_dict(self):
+        return {
             "artist": self.artist,
             "album": self.album,
             "release_year": self.release_year,
@@ -25,5 +25,6 @@ class Entry:
             "link": self.link
         }
 
-        return str(all_attr)
+    def __str__(self):
+        return str(self.to_dict)
 
