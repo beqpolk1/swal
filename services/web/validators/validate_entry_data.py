@@ -59,7 +59,7 @@ def _validate_release_year(release_year, errors):
         errors.append({"code": "A09", "msg": "Release year must be present"})
 
 def _validate_genre(genre, errors):  
-    if ("genre" != None):
+    if (genre is not None):
         if (not isinstance(genre, str)):
             try:
                 genre = str(genre)
