@@ -1,15 +1,20 @@
+import util_lib
+
 class Entry:
     def __init__(self, new_vals, new_files):
-        self.artist = new_vals.get("artist") or None
-        self.album = new_vals.get("album") or None
-        self.release_year = new_vals.get("release_year") or None
-        self.genre = new_vals.get("genre") or None
-        self.interest = new_vals.get("interest_level")
-        self.starred = new_vals.get("is_starred")
-        self.obtained = new_vals.get("is_obtained")
-        self.link = new_vals.get("link") or None
+        #required fields
+        self.artist = str(new_vals.get("artist"))
+        self.album = str(new_vals.get("album"))
+        self.release_year = int(new_vals.get("release_year"))
+        self.obtained = util_lib.str_to_bool(new_vals.get("is_obtained"))
+
+        #optional fields
+        self.genre = util_lib.get_str_or_none(new_vals, "genre")
+        self.interest = util_lib.get_int_or_none(new_vals, "interest_level")
+        self.link = util_lib.get_str_or_none(new_vals, "link")
         self.artwork_file_name = new_files.get("artwork_file").filename or None
         self.artwork_file = new_files.get("artwork_file")
+        self.starred = util_lib.get_bool_or_none(new_vals, "is_starred")
 
     def to_dict(self):
         return {
