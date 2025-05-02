@@ -1,15 +1,13 @@
-from classes import Entry
-from classes import Job_Status
-from validators import validate_entry
+from classes import Entry, Job_Status
+from validators import validate_entry_data
 import os, uuid, ftplib
 
 def perform_add_entry(form_data, files_data) -> Job_Status:
-    new_entry = Entry(form_data, files_data)
-
     result = Job_Status()
-    result.errors = validate_entry(new_entry)
+    result.errors = validate_entry_data(form_data, files_data)
 
     if (len(result.errors) == 0):
+        new_entry = Entry(form_data, files_data)
         result.status = "entry built"
 
         if (new_entry.artwork_file):
