@@ -5,12 +5,13 @@ class Job_Status:
         self.status = "initialized"
         self.errors = []
     
-    def __str__(self):
-        all_attr = {
+    def to_dict(self):
+        return {
             "id": self.id,
             "success": self.success,
             "status": self.status,
             "errors": self.errors
         }
 
-        return str(all_attr)
+    def __str__(self):
+        return str(self.to_dict())
