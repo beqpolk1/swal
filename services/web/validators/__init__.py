@@ -1,1 +1,1 @@
-from .validate_entry import validate_entry
+from .validate_entry_data import validate_entry_data

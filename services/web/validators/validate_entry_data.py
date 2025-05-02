@@ -1,18 +1,18 @@
 import re
-from classes import Entry
+import util_lib
 
-def validate_entry(new_entry : Entry) -> list:
+def validate_entry_data(entry_data, entry_files) -> list:
     errors = []
 
-    _validate_artist(new_entry.artist, errors)
-    _validate_album(new_entry.album, errors)
-    _validate_release_year(new_entry.release_year, errors)
-    _validate_genre(new_entry.genre, errors)
-    _validate_interest_level(new_entry.interest, errors)
-    _validate_starred(new_entry.starred, errors)
-    _validate_artwork(new_entry.artwork_file_name, new_entry.artwork_file, errors)
-    _validate_obtained(new_entry.obtained, errors)
-    _validate_link(new_entry.link, errors)
+    _validate_artist(entry_data.get("artist") or None, errors)
+    _validate_album(entry_data.get("album") or None, errors)
+    _validate_release_year(entry_data.get("release_year") or None, errors)
+    _validate_genre(entry_data.get("genre") or None, errors)
+    _validate_interest_level(entry_data.get("interest_level"), errors)
+    _validate_starred(entry_data.get("is_starred"), errors)
+    _validate_artwork(entry_files.get("artwork_file").filename or None, entry_files.get("artwork_file"), errors)
+    _validate_obtained(entry_data.get("is_obtained"), errors)
+    _validate_link(entry_data.get("link") or None, errors)
 
     return errors
     
@@ -86,7 +86,7 @@ def _validate_starred(starred, errors):
     if (starred != None):
         if (not isinstance(starred, bool)):
             try:
-                starred = bool(starred)
+                starred = util_lib.str_to_bool(starred)
             except:
                 errors.append({"code": "A14", "msg": "Starred must be true or false"})
 
@@ -105,7 +105,7 @@ def _validate_obtained(obtained, errors):
     if (obtained != None):
         if (not isinstance(obtained, bool)):
             try:
-                obtained = bool(obtained)
+                obtained = util_lib.str_to_bool(obtained)
             except:
                 errors.append({"code": "A15", "msg": "Is obtained must be true or false"})
     else:
