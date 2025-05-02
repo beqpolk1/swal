@@ -17,7 +17,7 @@ def validate_entry_data(entry_data, entry_files) -> list:
     return errors
     
 def _validate_artist(artist, errors):
-    if (artist != None):
+    if (artist not in [None, ""]):
         if (not isinstance(artist, str)):
             try:
                 artist = str(artist)
@@ -31,7 +31,7 @@ def _validate_artist(artist, errors):
         errors.append({"code": "A03", "msg": "Artist name must be present"})
 
 def _validate_album(album, errors):
-    if (album != None):
+    if (album not in [None, ""]):
         if (not isinstance(album, str)):
             try:
                 album = str(album)
