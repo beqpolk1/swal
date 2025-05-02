@@ -45,7 +45,7 @@ def _validate_album(album, errors):
         errors.append({"code": "A06", "msg": "Album name must be present"})
 
 def _validate_release_year(release_year, errors):
-    if (release_year != None):
+    if (release_year is not None):
         if (not isinstance(release_year, int)):
             try:
                 release_year = int(release_year)
@@ -71,7 +71,7 @@ def _validate_genre(genre, errors):
             errors.append({"code": "A11", "msg": "Genre must be 255 characters or less"})
 
 def _validate_interest_level(interest_level, errors):
-    if (interest_level != None):
+    if (interest_level is not None):
         if (not isinstance(interest_level, int)):
             try:
                 interest_level = int(interest_level)
@@ -83,7 +83,7 @@ def _validate_interest_level(interest_level, errors):
             errors.append({"code": "A13", "msg": "Interest level must be 1, 2, or 3"})
 
 def _validate_starred(starred, errors):
-    if (starred != None):
+    if (starred is not None):
         if (not isinstance(starred, bool)):
             try:
                 starred = util_lib.str_to_bool(starred)
@@ -91,18 +91,18 @@ def _validate_starred(starred, errors):
                 errors.append({"code": "A14", "msg": "Starred must be true or false"})
 
 def _validate_artwork(artwork, artwork_file, errors):
-    if (artwork != None):
+    if (artwork is not None):
         if (not isinstance(artwork, str)):
             try:
                 artwork = str(artwork)
             except:
                 errors.append({"code": "A19", "msg": "artwork file name must be a string"})
     
-    if ((artwork != None and not artwork_file) or (artwork == None and artwork_file)):
+    if ((artwork is not None and not artwork_file) or (artwork is None and artwork_file)):
         errors.append({"code": "A20", "msg": "artwork file name and artwork file must both be present"})
 
 def _validate_obtained(obtained, errors):
-    if (obtained != None):
+    if (obtained is not None):
         if (not isinstance(obtained, bool)):
             try:
                 obtained = util_lib.str_to_bool(obtained)
@@ -114,7 +114,7 @@ def _validate_obtained(obtained, errors):
 def _validate_link(link, errors):
     url_pattern = r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"
     
-    if (link != None):
+    if (link is not None):
         if (not isinstance(link, str)):
             try:
                 link = str(link)
