@@ -9,6 +9,7 @@ class Entry:
         self.obtained = util_lib.str_to_bool(new_vals.get("is_obtained"))
 
         #optional fields
+        self._id = util_lib.get_str_or_none(new_vals, "id")
         self.genre = util_lib.get_str_or_none(new_vals, "genre")
         self.interest = util_lib.get_int_or_none(new_vals, "interest_level")
         self.link = util_lib.get_str_or_none(new_vals, "link")
@@ -18,6 +19,7 @@ class Entry:
 
     def to_dict(self):
         return {
+            "_id": self._id,
             "artist": self.artist,
             "album": self.album,
             "release_year": self.release_year,

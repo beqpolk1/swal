@@ -15,8 +15,10 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
             new_entry.artwork_file_name = _perform_artwork_add(new_entry.artwork_file_name, new_entry.artwork_file, result)
             result.status = "artwork uploaded"
 
-        new_entry_id = _perform_db_add(new_entry)
+        new_entry._id = str(_perform_db_add(new_entry))
         result.status = "added to DB"
+        
+        result.status = new_entry._id
         result.new_img = new_entry.artwork_file_name
         result.success = True
     else:

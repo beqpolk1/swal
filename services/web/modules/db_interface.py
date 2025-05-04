@@ -7,5 +7,8 @@ db = mongo_client["swal"]
 def add_entry_to_db(new_entry : Entry):
     entries = db["entries"]
 
-    new_entry_id = entries.insert_one(new_entry.to_dict()).inserted_id
+    upl_entry = new_entry.to_dict()
+    if ("_id" in upl_entry and upl_entry["_id"] is None): del upl_entry["_id"]
+
+    new_entry_id = entries.insert_one(upl_entry).inserted_id
     return new_entry_id
