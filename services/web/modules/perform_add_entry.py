@@ -1,7 +1,7 @@
 from classes import Entry, Job_Status
 from validators import validate_entry_data
 from .db_interface import add_entry_to_db
-import os, uuid, ftplib
+import os, uuid, ftplib, socket
 
 def perform_add_entry(form_data, files_data) -> Job_Status:
     result = Job_Status()
@@ -27,22 +27,56 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
     return result
 
 def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
-    new_filename = str(uuid.uuid4()) + filename[filename.rfind("."):]
-    new_filepath = os.path.join('/var/tmp', new_filename)
+    #generate filename and save a temp version locally
+    try:
+        new_filename = str(uuid.uuid4()) + filename[filename.rfind("."):]
+        new_filepath = os.path.join('/var/tmp', new_filename)
 
-    file.save(new_filepath)
-    result.status = "artwork file saved locally"
+        file.save(new_filepath)
+        result.status = "artwork file saved locally"
 
-    ftp_server = ftplib.FTP("nginx", "swal_image", "swallowth3p4ssword")
-    ftp_server.cwd("img")
+    except FileNotFoundError as e:
+        raise Exception(f"{new_filepath} does not exist") from e
+    except PermissionError as e:
+        raise Exception(f"Do not have permissions to write to {new_filepath}") from e
+    except OSError as e:
+        raise Exception("OSError accessing filesystem to save temp artwork file") from e
+    except Exception as e:
+        raise Exception("Other exception saving temp artwork file") from e        
 
-    with open(new_filepath, "rb") as upl_file:
-        ftp_server.storbinary(f"STOR {new_filename}", upl_file)
-        result.status = "artwork transferred to server"
-    ftp_server.quit
+    #FTP local temp file to nginx server for static storage
+    try:
+        ftp_server = ftplib.FTP("nginx", "swal_image", "swallowth3p4ssword")
+        ftp_server.cwd("img")
+        
+        with open(new_filepath, "rb") as upl_file:
+            ftp_server.storbinary(f"STOR {new_filename}", upl_file)
+            result.status = "artwork transferred to server"
+        ftp_server.quit
 
-    os.remove(new_filepath)
-    result.status = "local artwork file cleaned"
+    except (socket.gaierror, socket.timeout, ConnectionRefusedError) as e:
+        raise Exception("Network/connection error connecting to FTP server") from e
+    except ftplib.error_perm as e:
+        raise Exception("Permanent FTP error (e.g., login failed)") from e
+    except ftplib.all_errors as e:
+        raise Exception("General FTP error") from e
+    except Exception as e:
+        raise Exception("Other exception transferring artwork file") from e
+    
+    finally:
+        #cleanup local temp file
+        try:
+            os.remove(new_filepath)
+            result.status = "local artwork file cleaned"
+
+        except FileNotFoundError:
+            result.errors.append({"code": "AEX01", "msg": f"Could not find temp file {new_filepath}"})
+        except PermissionError:
+            result.errors.append({"code": "AEX02", "msg": f"Do not have permissions to delete temp file {new_filename}"})
+        except OSError as e:
+            result.errors.append({"code": "AEX03", "msg": f"OSError deleting temp file {new_filepath}"})
+        except Exception as e:
+            result.errors.append({"code": "AEX04", "msg": f"Ohter exception deleting temp file {new_filepath}"})
 
     return new_filename
 
