@@ -28,6 +28,7 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
                 new_entry._id = str(_perform_db_add(new_entry))
                 result.status = "added to DB"
             except Exception as e:
+                if (new_entry.artwork_file): _cleanup_artwork_file(new_entry.artwork_file_name, result)
                 result.status = "failed to add entry to database"
                 raise e from e
             
@@ -100,3 +101,23 @@ def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
 def _perform_db_add(new_entry : Entry):
     return add_entry_to_db(new_entry)
 
+def _cleanup_artwork_file(filename : str, result : Job_Status):
+    try:
+        ftp_server = ftplib.FTP("nginx", "swal_image", "swallowth3p4ssword")
+        ftp_server.cwd("img")
+        ftp_server.delete(filename)
+        ftp_server.quit
+        result.status = "artwork removed from ftp server"
+
+    except (socket.gaierror, socket.timeout, ConnectionRefusedError) as e:
+        result.errors.append({"code": "AEX01", "msg": f"Network/connection error connecting to FTP server"})
+        result.status = "failed to cleanup artwork file from FTP server"
+    except ftplib.error_perm as e:
+        result.errors.append({"code": "AEX01", "msg": f"Permanent FTP error (e.g., login failed)"})
+        result.status = "failed to cleanup artwork file from FTP server"
+    except ftplib.all_errors as e:
+        result.errors.append({"code": "AEX01", "msg": f"General FTP error"})
+        result.status = "failed to cleanup artwork file from FTP server"
+    except Exception as e:
+        result.errors.append({"code": "AEX01", "msg": f"Other exception transferring artwork file"})
+        result.status = "failed to cleanup artwork file from FTP server"
