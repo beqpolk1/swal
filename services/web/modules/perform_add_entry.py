@@ -5,24 +5,41 @@ import os, uuid, ftplib, socket
 
 def perform_add_entry(form_data, files_data) -> Job_Status:
     result = Job_Status()
-    result.errors = validate_entry_data(form_data, files_data)
 
-    if (len(result.errors) == 0):
-        new_entry = Entry(form_data, files_data)
-        result.status = "entry built"
+    try:
+        result.errors = validate_entry_data(form_data, files_data)
 
-        if (new_entry.artwork_file):
-            new_entry.artwork_file_name = _perform_artwork_add(new_entry.artwork_file_name, new_entry.artwork_file, result)
-            result.status = "artwork uploaded"
+        if (len(result.errors) == 0):
+            try:
+                new_entry = Entry(form_data, files_data)
+                result.status = "entry built"
+            except Exception as e:
+                result.status = "failed to build entry"
+                raise e from e
 
-        new_entry._id = str(_perform_db_add(new_entry))
-        result.status = "added to DB"
-        
-        result.status = new_entry._id
-        result.new_img = new_entry.artwork_file_name
-        result.success = True
-    else:
+            if (new_entry.artwork_file):
+                try:
+                    new_entry.artwork_file_name = _perform_artwork_add(new_entry.artwork_file_name, new_entry.artwork_file, result)
+                    result.status = "artwork uploaded"
+                except Exception as e:
+                    result.status = "failed to process and upload artwork file"
+                    raise e from e
+            try:
+                new_entry._id = str(_perform_db_add(new_entry))
+                result.status = "added to DB"
+            except Exception as e:
+                result.status = "failed to add entry to database"
+                raise e from e
+            
+            #boilerplate/negligible
+            result.status = new_entry._id
+            result.new_img = new_entry.artwork_file_name
+            result.success = True
+        else:
+            result.status = "failed"
+    except Exception as e:
         result.status = "failed"
+        result.errors.append({"code": "AEX05", "msg": f"Exception adding entry: {e}"})
 
     return result
 
