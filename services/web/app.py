@@ -10,8 +10,6 @@ from modules import index, add_entry
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://db:27017/"
 
-mongoClient = MongoClient(app.config["MONGO_URI"])
-
 ################################################
 # basic/utility routes
 ################################################
@@ -22,6 +20,7 @@ def media():
 
 @app.route('/dbtest')
 def dbtest():
+    mongoClient = MongoClient(app.config["MONGO_URI"])
     mongoClient.admin.command('ping')
     return 'Connected to MongoDB version ' + mongoClient.server_info()["version"]
 
