@@ -4,8 +4,14 @@ from classes import Job_Status
 
 def add_entry(mode : str):
     if (request.method == "GET"): 
-        return render_template("add_entry.html.j2", mode = mode)
+        try:
+            return render_template("add_entry.html.j2", mode = mode)
+        except Exception as e:
+            return (f"Exception rendering template: {e}")
     
     elif (request.method == "POST"):
         add_result = perform_add_entry(request.form, request.files)
-        return render_template("add_entry.html.j2", result = add_result)
+        try:
+            return render_template("add_entry.html.j2", result = add_result)
+        except Exception as e:
+            return (f"Exception rendering template: {e}")
