@@ -1,5 +1,6 @@
 from pymongo import MongoClient, errors
 from classes import Entry
+import socket
 
 _db = None
 
@@ -8,13 +9,11 @@ def get_db(db_name : str):
 
     if _db is None:
         try:
-            mongo_client = MongoClient("mongodb://mongoadmin:secret@db:27017/")
+            mongo_client = MongoClient("mongodb://mongoadmin:secret@db:27017/", serverSelectionTimeoutMS=2000)
             mongo_client.admin.command("ping")
-        except errors.PyMongoErrors as e:
-            raise ConnectionError(f"Could not connect to MongoDB: {e}")
-        except:
-            raise ConnectionError(f"Unknown error connecting to MongoDB: {e}")
             _db = mongo_client[db_name]
+        except (errors.PyMongoError, socket.gaierror, ConnectionRefusedError, socket.timeout, OSError) as e:
+            raise ConnectionError("Could not connect to MongoDB") from e
     
     return _db
 
