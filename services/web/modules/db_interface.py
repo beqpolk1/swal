@@ -27,7 +27,7 @@ def add_entry_to_db(new_entry : Entry):
         entries = db_conn["entries"]
         new_entry_id = entries.insert_one(upl_entry).inserted_id
     except ConnectionError as e:
-        raise e
+        raise e from e
     except Exception as e:
         raise Exception("Other exception adding entry to DB") from e
     
