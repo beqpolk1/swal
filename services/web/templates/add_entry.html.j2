@@ -37,8 +37,8 @@
     
     {% elif request.method == "POST" %}
     <div class="add_result">
+        <p>{{ result.status[-1] }}</p>
         {% if result.success %}
-            {{ result.status }}
         <img src="{{ macros.media_file('img', result.new_img) }}">
         {% else %}
         <ul class="add_errors">

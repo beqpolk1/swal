@@ -1,6 +1,5 @@
 from flask import render_template, request
 from .perform_add_entry import perform_add_entry
-from classes import Job_Status
 
 def add_entry(mode : str):
     if (request.method == "GET"): 
