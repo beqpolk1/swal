@@ -7,7 +7,7 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
     result = Job_Status()
 
     try:
-        result.errors = validate_entry_data(form_data, files_data)
+        result.add_errors(validate_entry_data(form_data, files_data))
 
         if (len(result.errors) == 0):
             try:
