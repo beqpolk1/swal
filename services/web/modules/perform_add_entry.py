@@ -1,6 +1,7 @@
 from classes import Entry, Job_Status
 from validators import validate_entry_data
 from .db_interface import add_entry_to_db
+import util_lib
 import os, uuid, ftplib, socket
 
 def perform_add_entry(form_data, files_data) -> Job_Status:
@@ -41,7 +42,7 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
         else:
             result.update_status("new entry data failed validation")
     except Exception as e:
-        result.add_error(f"Exception adding entry: {e}")
+        result.add_error(util_lib.GENERAL_EXCEPTION.format(exception = e))
 
     return result
 
@@ -55,13 +56,13 @@ def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
         result.update_status("artwork file saved locally")
 
     except FileNotFoundError as e:
-        raise Exception(f"{new_filepath} does not exist") from e
+        raise Exception(util_lib.ARTWORK_SAVE_MISSING.format(filepath = new_filepath)) from e
     except PermissionError as e:
-        raise Exception(f"Do not have permissions to write to {new_filepath}") from e
+        raise Exception(util_lib.ARTWORK_SAVE_NO_PERMISSION.format(filepath = new_filepath)) from e
     except OSError as e:
-        raise Exception("OSError accessing filesystem to save temp artwork file") from e
+        raise Exception(util_lib.ARTWORK_SAVE_OS_ERROR) from e
     except Exception as e:
-        raise Exception("Other exception saving temp artwork file") from e        
+        raise Exception(util_lib.ARTWORK_SAVE_OTHER_ERROR.format(exception = e)) from e        
 
     #FTP local temp file to nginx server for static storage
     try:
@@ -74,13 +75,13 @@ def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
         ftp_server.quit
 
     except (socket.gaierror, socket.timeout, ConnectionRefusedError) as e:
-        raise Exception("Network/connection error connecting to FTP server") from e
+        raise Exception(util_lib.FTP_NETWORK_ERROR) from e
     except ftplib.error_perm as e:
-        raise Exception("Permanent FTP error (e.g., login failed)") from e
+        raise Exception(util_lib.FTP_PERMANENT_ERROR) from e
     except ftplib.all_errors as e:
-        raise Exception("General FTP error") from e
+        raise Exception(util_lib.FTP_GENERAL_ERROR) from e
     except Exception as e:
-        raise Exception("Other exception transferring artwork file") from e
+        raise Exception(util_lib.FTP_OTHER_ERROR.format(exception = e)) from e
     
     finally:
         #cleanup local temp file
@@ -88,14 +89,14 @@ def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
             os.remove(new_filepath)
             result.update_status("local artwork file cleaned")
 
-        except FileNotFoundError:
-            result.add_error(f"Could not find temp file {new_filepath}")
-        except PermissionError:
-            result.add_error(f"Do not have permissions to delete temp file {new_filename}")
+        except FileNotFoundError as e:
+            result.add_error(util_lib.TEMP_FILE_NOT_FOUND.format(path = new_filepath))
+        except PermissionError as e:
+            result.add_error(util_lib.TEMP_FILE_DELETE_PERM.format(filename = new_filename))
         except OSError as e:
-            result.add_error(f"OSError deleting temp file {new_filepath}")
+            result.add_error(util_lib.OS_ERROR_DELETING_FILE.format(path = new_filepath))
         except Exception as e:
-            result.add_error(f"Other exception deleting temp file {new_filepath}")
+            result.add_error(util_lib.UNKNOWN_DELETE_ERROR.format(path = new_filepath))
 
     return new_filename
 
@@ -110,15 +111,15 @@ def _cleanup_artwork_file(filename : str, result : Job_Status):
         ftp_server.quit
         result.update_status("artwork removed from static server")
 
-    except (socket.gaierror, socket.timeout, ConnectionRefusedError):
-        result.add_error("Network/connection error connecting to FTP server")
+    except (socket.gaierror, socket.timeout, ConnectionRefusedError) as e:
+        result.add_error(util_lib.FTP_NETWORK_ERROR)
         result.update_status("failed to cleanup artwork from static server")
-    except ftplib.error_perm:
-        result.add_error("Permanent FTP error (e.g., login failed)")
+    except ftplib.error_perm as e:
+        result.add_error(util_lib.FTP_PERMANENT_ERROR)
         result.update_status("failed to cleanup artwork from static server")
-    except ftplib.all_errors:
-        result.add_error("General FTP error")
+    except ftplib.all_errors as e:
+        result.add_error(util_lib.FTP_GENERAL_ERROR)
         result.update_status("failed to cleanup artwork from static server")
-    except Exception:
-        result.add_error("Other exception transferring artwork file")
+    except Exception as e:
+        result.add_error(util_lib.FTP_OTHER_ERROR.format(exception = e))
         result.update_status("failed to cleanup artwork from static server")
