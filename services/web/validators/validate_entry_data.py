@@ -29,76 +29,76 @@ def _validate_artist(artist):
         try:
             artist = str(artist)
         except:
-            return util_lib.artist_must_be_string
+            return util_lib.ARTIST_MUST_BE_STRING
         if len(artist) > 255:
-            return util_lib.artist_too_long
+            return util_lib.ARTIST_TOO_LONG
     else:
-        return util_lib.artist_required
+        return util_lib.ARTIST_REQUIRED
 
 def _validate_album(album):
     if album not in [None, ""]:
         try:
             album = str(album)
         except:
-            return util_lib.album_must_be_string
+            return util_lib.ALBUM_MUST_BE_STRING
         if len(album) > 500:
-            return util_lib.album_too_long
+            return util_lib.ALBUM_TOO_LONG
     else:
-        return util_lib.album_required
+        return util_lib.ALBUM_REQUIRED
 
 def _validate_release_year(release_year):
     if release_year is not None:
         try:
             release_year = int(release_year)
         except:
-            return util_lib.release_year_must_be_int
+            return util_lib.RELEASE_YEAR_MUST_BE_INT
         if release_year < 1900 or release_year > 2100:
-            return util_lib.release_year_range
+            return util_lib.RELEASE_YEAR_RANGE
     else:
-        return util_lib.release_year_required
+        return util_lib.RELEASE_YEAR_REQUIRED
 
 def _validate_genre(genre):
     if genre is not None:
         try:
             genre = str(genre)
         except:
-            return util_lib.genre_must_be_string
+            return util_lib.GENRE_MUST_BE_STRING
         if len(genre) > 255:
-            return util_lib.genre_too_long
+            return util_lib.GENRE_TOO_LONG
 
 def _validate_interest_level(interest_level):
     if interest_level is not None:
         try:
             interest_level = int(interest_level)
         except:
-            return util_lib.interest_level_must_be_int
+            return util_lib.INTEREST_LEVEL_MUST_BE_INT
         if interest_level not in [1, 2, 3]:
-            return util_lib.interest_level_range
+            return util_lib.INTEREST_LEVEL_RANGE
 
 def _validate_starred(starred):
     if starred is not None:
         try:
             util_lib.str_to_bool(starred)
         except:
-            return util_lib.starred_invalid
+            return util_lib.STARRED_INVALID
 
 def _validate_artwork(artwork, artwork_file):
     if artwork is not None:
         try:
             artwork = str(artwork)
         except:
-            return util_lib.artwork_filename_must_be_string
+            return util_lib.ARTWORK_FILENAME_MUST_BE_STRING
     if (artwork and not artwork_file) or (not artwork and artwork_file):
-        return util_lib.artwork_file_mismatch
+        return util_lib.ARTWORK_FILE_MISMATCH
 
 def _validate_obtained(obtained):
     if obtained is not None:
         try:
             util_lib.str_to_bool(obtained)
         except:
-            return util_lib.obtained_invalid
+            return util_lib.OBTAINED_INVALID
     else:
-        return util_lib.obtained_required
+        return util_lib.OBTAINED_REQUIRED
 
 def _validate_link(link):
     url_pattern = r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"
@@ -106,6 +106,6 @@ def _validate_link(link):
         try:
             link = str(link)
         except:
-            return util_lib.link_must_be_string
+            return util_lib.LINK_MUST_BE_STRING
         if not re.fullmatch(url_pattern, link):
-            return util_lib.link_invalid_format
+            return util_lib.LINK_INVALID_FORMAT

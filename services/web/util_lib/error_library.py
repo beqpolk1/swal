@@ -17,31 +17,31 @@ FTP_GENERAL_ERROR = "General FTP error"
 FTP_OTHER_ERROR = "Other exception performing FTP op on artwork file: {exception}"
 
 ####### ENTRY VALIDATION MESSAGES #######
-artist_must_be_string = "Artist name must be a string"
-artist_too_long = "Artist name must be 255 characters or less"
-artist_required = "Artist name must be present"
+ARTIST_MUST_BE_STRING = "Artist name must be a string"
+ARTIST_TOO_LONG = "Artist name must be 255 characters or less"
+ARTIST_REQUIRED = "Artist name must be present"
 
-album_must_be_string = "Album name must be a string"
-album_too_long = "Album name must be 500 characters or less"
-album_required = "Album name must be present"
+ALBUM_MUST_BE_STRING = "Album name must be a string"
+ALBUM_TOO_LONG = "Album name must be 500 characters or less"
+ALBUM_REQUIRED = "Album name must be present"
 
-release_year_must_be_int = "Release year must be an integer"
-release_year_range = "Release year must be between 1900 and 2100"
-release_year_required = "Release year must be present"
+RELEASE_YEAR_MUST_BE_INT = "Release year must be an integer"
+RELEASE_YEAR_RANGE = "Release year must be between 1900 and 2100"
+RELEASE_YEAR_REQUIRED = "Release year must be present"
 
-genre_must_be_string = "Genre must be a string"
-genre_too_long = "Genre must be 255 characters or less"
+GENRE_MUST_BE_STRING = "Genre must be a string"
+GENRE_TOO_LONG = "Genre must be 255 characters or less"
 
-interest_level_must_be_int = "Interest level must be an integer"
-interest_level_range = "Interest level must be 1, 2, or 3"
+INTEREST_LEVEL_MUST_BE_INT = "Interest level must be an integer"
+INTEREST_LEVEL_RANGE = "Interest level must be 1, 2, or 3"
 
-starred_invalid = "Starred must be true or false"
+STARRED_INVALID = "Starred must be true or false"
 
-artwork_filename_must_be_string = "Artwork file name must be a string"
-artwork_file_mismatch = "Artwork file name and artwork file must both be present"
+ARTWORK_FILENAME_MUST_BE_STRING = "Artwork file name must be a string"
+ARTWORK_FILE_MISMATCH = "Artwork file name and artwork file must both be present"
 
-obtained_invalid = "Is obtained must be true or false"
-obtained_required = "Is obtained must be present"
+OBTAINED_INVALID = "Is obtained must be true or false"
+OBTAINED_REQUIRED = "Is obtained must be present"
 
-link_must_be_string = "Link must be a string"
-link_invalid_format = "Link must be in a valid URL format"
+LINK_MUST_BE_STRING = "Link must be a string"
+LINK_INVALID_FORMAT = "Link must be in a valid URL format"
