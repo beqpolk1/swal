@@ -1,3 +1,22 @@
+####### ENTRY ADD MESSAGES #######
+GENERAL_EXCEPTION = "Exception adding entry: {exception}"
+
+TEMP_FILE_NOT_FOUND = "Could not find temp file {path}"
+TEMP_FILE_DELETE_PERM = "Do not have permissions to delete temp file {filename}"
+OS_ERROR_DELETING_FILE = "OSError deleting temp file {path}"
+UNKNOWN_DELETE_ERROR = "Other exception deleting temp file {path}"
+
+ARTWORK_SAVE_MISSING = "{filepath} does not exist"
+ARTWORK_SAVE_NO_PERMISSION = "Do not have permissions to write to {filepath}"
+ARTWORK_SAVE_OS_ERROR = "OSError accessing filesystem to save temp artwork file"
+ARTWORK_SAVE_OTHER_ERROR = "Other exception saving temp artwork file: {exception}"
+
+FTP_NETWORK_ERROR = "Network/connection error connecting to FTP server"
+FTP_PERMANENT_ERROR = "Permanent FTP error (e.g. login failed)"
+FTP_GENERAL_ERROR = "General FTP error"
+FTP_OTHER_ERROR = "Other exception performing FTP op on artwork file: {exception}"
+
+####### ENTRY VALIDATION MESSAGES #######
 artist_must_be_string = "Artist name must be a string"
 artist_too_long = "Artist name must be 255 characters or less"
 artist_required = "Artist name must be present"
