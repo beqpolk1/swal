@@ -43,7 +43,7 @@
         {% else %}
         <ul class="add_errors">
             {% for error in result.errors %}
-            <li>Error {{ error.code }} - {{ error.msg }}</li>
+            <li>{{ error }}</li>
             {% endfor %}
         </ul>
         {% endif %}
