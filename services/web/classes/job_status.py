@@ -17,5 +17,8 @@ class Job_Status:
     def update_status(self, new_status : str):
         self.status.append(new_status)
 
+    def get_status (self):
+        return self.status[-1]
+
     def __str__(self):
         return str(self.to_dict())
