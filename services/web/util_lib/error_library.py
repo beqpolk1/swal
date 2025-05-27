@@ -1,5 +1,5 @@
 ####### ENTRY ADD MESSAGES #######
-GENERAL_EXCEPTION = "Exception adding entry: {exception}"
+GENERAL_ADD_EXCEPTION = "Exception adding entry: {exception}"
 
 TEMP_FILE_NOT_FOUND = "Could not find temp file {path}"
 TEMP_FILE_DELETE_PERM = "Do not have permissions to delete temp file {filename}"

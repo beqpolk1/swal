@@ -42,7 +42,7 @@ def perform_add_entry(form_data, files_data) -> Job_Status:
         else:
             result.update_status("new entry data failed validation")
     except Exception as e:
-        result.add_error(util_lib.GENERAL_EXCEPTION.format(exception = e))
+        result.add_error(util_lib.GENERAL_ADD_EXCEPTION.format(exception = e))
 
     return result
 
