@@ -7,6 +7,7 @@ class Config:
     FTP_SERVER_NAME = "nginx"
     FTP_USERNAME = "swal_image"
     FTP_PASSWORD = "swallowth3p4ssword"
+    FTP_IMG_DIR = "img"
     
     ARTIST_LENGTH_LIMIT = 255
 

@@ -1,6 +1,7 @@
 from classes import Entry, Job_Status
 from validators import validate_entry_data
 from .db_interface import add_entry_to_db
+from flask import current_app
 import util_lib
 import os, uuid, ftplib, socket
 
@@ -66,8 +67,8 @@ def _perform_artwork_add(filename : str, file, result : Job_Status) -> str:
 
     #FTP local temp file to nginx server for static storage
     try:
-        ftp_server = ftplib.FTP("nginx", "swal_image", "swallowth3p4ssword")
-        ftp_server.cwd("img")
+        ftp_server = ftplib.FTP(current_app.config["FTP_SERVER_NAME"], current_app.config["FTP_USERNAME"], current_app.config["FTP_PASSWORD"])
+        ftp_server.cwd(current_app.config["FTP_IMG_DIR"])
         
         with open(new_filepath, "rb") as upl_file:
             ftp_server.storbinary(f"STOR {new_filename}", upl_file)
@@ -105,8 +106,8 @@ def _perform_db_add(new_entry : Entry):
 
 def _cleanup_artwork_file(filename : str, result : Job_Status):
     try:
-        ftp_server = ftplib.FTP("nginx", "swal_image", "swallowth3p4ssword")
-        ftp_server.cwd("img")
+        ftp_server = ftplib.FTP(current_app.config["FTP_SERVER_NAME"], current_app.config["FTP_USERNAME"], current_app.config["FTP_PASSWORD"])
+        ftp_server.cwd(current_app.config["FTP_IMG_DIR"])
         ftp_server.delete(filename)
         ftp_server.quit
         result.update_status("artwork removed from static server")
