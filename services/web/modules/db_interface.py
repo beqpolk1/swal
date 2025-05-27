@@ -1,5 +1,6 @@
 from pymongo import MongoClient, errors
 from classes import Entry
+from flask import current_app
 import socket
 
 _db = None
@@ -9,7 +10,7 @@ def get_db(db_name : str):
 
     if _db is None:
         try:
-            mongo_client = MongoClient("mongodb://mongoadmin:secret@db:27017/", serverSelectionTimeoutMS=2000)
+            mongo_client = MongoClient(current_app.config["MONGO_CONN_STR"], serverSelectionTimeoutMS=current_app.config["MONGO_CONN_TIMEOUT"])
             mongo_client.admin.command("ping")
             _db = mongo_client[db_name]
         except (errors.PyMongoError, socket.gaierror, ConnectionRefusedError, socket.timeout, OSError) as e:
@@ -23,8 +24,8 @@ def add_entry_to_db(new_entry : Entry):
     if ("_id" in upl_entry and upl_entry["_id"] is None): del upl_entry["_id"]
 
     try:
-        db_conn = get_db("swal")
-        entries = db_conn["entries"]
+        db_conn = get_db(current_app.config["MONGO_DB_NAME"])
+        entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
         new_entry_id = entries.insert_one(upl_entry).inserted_id
     except ConnectionError as e:
         raise e from e

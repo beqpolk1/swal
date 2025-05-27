@@ -1,6 +1,9 @@
 class Config:
     MONGO_CONN_STR = "mongodb://mongoadmin:secret@db:27017/"
     MONGO_CONN_TIMEOUT = 2000
+    MONGO_DB_NAME = "swal"
+    MONGO_ENTRIES_COLL = "entries"
+
     FTP_SERVER_NAME = "nginx"
     FTP_USERNAME = "swal_image"
     FTP_PASSWORD = "swallowth3p4ssword"
