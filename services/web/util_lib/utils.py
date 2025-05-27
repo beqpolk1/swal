@@ -1,3 +1,5 @@
+from .error_library import *
+
 def str_to_bool(val):
     if isinstance(val, bool):
         return val
@@ -9,7 +11,7 @@ def str_to_bool(val):
         elif val in ("false", "0", "no", "off"):
             return False
         
-    raise ValueError(f"Invalid boolean value: {val}")
+    raise ValueError(INVALID_BOOL.format(value = val))
 
 def get_str_or_none(d: dict, key: str):
     val = d.get(key) or None
