@@ -30,6 +30,14 @@ def add_entry_to_db(new_entry : Entry):
     except ConnectionError as e:
         raise e from e
     except Exception as e:
-        raise Exception("Other exception adding entry to DB") from e
+        #double-check whether database has gone down since first connecting
+        try:
+            global _db
+            _db = None
+            test_db = get_db(current_app.config["MONGO_DB_NAME"])
+        except ConnectionError as e:
+            raise e from e
+        else:
+            raise Exception(f"Other exception adding entry to DB: {e}") from e
     
     return new_entry_id
