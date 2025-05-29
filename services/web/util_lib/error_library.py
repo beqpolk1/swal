@@ -46,5 +46,8 @@ OBTAINED_REQUIRED = "Is obtained must be present"
 LINK_MUST_BE_STRING = "Link must be a string"
 LINK_INVALID_FORMAT = "Link must be in a valid URL format"
 
+
+####### TEMPLATE MESSAGES #######
+GENERAL_TEMPLATE_EXCEPTION = "Exception rendering template: {exception}"
 ####### UTIL MESSAGES #######
 INVALID_BOOL = "Invalid boolean value: {value}"
