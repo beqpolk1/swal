@@ -4,8 +4,8 @@
 
 <head>
     {% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ macros.static_file('css', 'styles.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ macros.static_file('img', 'favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ macros.static_file(CSS_STATIC_DIR, 'styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ macros.static_file(IMG_STATIC_DIR, 'favicon.ico') }}">
     <title>{% block title %}{% endblock %}</title>
     {% block scripts %}{% endblock %}
     {% endblock %}

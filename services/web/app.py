@@ -43,7 +43,7 @@ def create_app():
 
     @app.route('/mediatest')
     def mediatest():
-        return redirect(url_for('media', filename = 'img/media_test.jpg'))
+        return redirect(url_for('media', filename = app.config['MEDIA_IMG_DIR'] + '/media_test.jpg'))
 
     ################################################
     # external module routes
