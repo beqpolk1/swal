@@ -1,9 +1,14 @@
 {% block std_head %}
 
 <div class="header">
-    <div class="title">
-        <h1>SWaL</h1>
-        <p><span class="first_lett">S</span>tuff <span class="first_lett">W</span>orth a <span class="first_lett">L</span>isten</p>
+    <div class="top_banner">
+        <div class="logo">
+            <img src="{{ macros.static_file(IMG_STATIC_DIR, 'swallow_small.jpg') }}">
+        </div>
+        <div class="title">
+            <h1>SWaL</h1>
+            <p><span class="first_lett">S</span>tuff <span class="first_lett">W</span>orth a <span class="first_lett">L</span>isten</p>
+        </div>
     </div>
 
     <nav class="top_menu_wrapper">

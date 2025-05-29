@@ -6,8 +6,20 @@ body {
     display: none;
 }
 
-div.title {
+div.top_banner {
     margin: 10px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.logo > img {
+    max-height: 100px;
+}
+
+div.title {
+    margin-left: 10px;
 }
 
 div.title > h1 {
