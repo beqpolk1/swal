@@ -20,7 +20,8 @@ def create_app():
             'MEDIA_IMG_DIR': app.config['MEDIA_IMG_DIR'],
             'JS_STATIC_DIR': app.config['JS_STATIC_DIR'],
             'IMG_STATIC_DIR': app.config['IMG_STATIC_DIR'],
-            'CSS_STATIC_DIR': app.config['CSS_STATIC_DIR']
+            'CSS_STATIC_DIR': app.config['CSS_STATIC_DIR'],
+            'LOGO_IMG': app.config['LOGO_IMG']
         }
 
     ################################################

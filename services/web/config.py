@@ -3,6 +3,8 @@ class Config:
     JS_STATIC_DIR = "js"
     IMG_STATIC_DIR = "img"
     CSS_STATIC_DIR = "css"
+
+    LOGO_IMG = "swallow_small.jpg"
     
     MONGO_CONN_STR = "mongodb://mongoadmin:secret@db:27017/"
     MONGO_CONN_TIMEOUT = 2000
