@@ -14,6 +14,15 @@ def create_app():
     config_name = os.getenv("FLASK_CONFIG", "DevelopmentConfig")
     app.config.from_object(f"config.{config_name}")
 
+    @app.context_processor
+    def inject_config():
+        return {
+            'MEDIA_IMG_DIR': app.config['MEDIA_IMG_DIR'],
+            'JS_STATIC_DIR': app.config['JS_STATIC_DIR'],
+            'IMG_STATIC_DIR': app.config['IMG_STATIC_DIR'],
+            'CSS_STATIC_DIR': app.config['CSS_STATIC_DIR']
+        }
+
     ################################################
     # basic/utility routes
     ################################################
