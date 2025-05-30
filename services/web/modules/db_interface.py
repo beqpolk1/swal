@@ -3,21 +3,22 @@ from classes import Entry
 from flask import current_app
 import socket
 
+_client = None
 _db = None
 
 def get_db(db_name : str):
-    global _db
-
-    if _db is None:
-        try:
-            mongo_client = MongoClient(current_app.config["MONGO_CONN_STR"], serverSelectionTimeoutMS=current_app.config["MONGO_CONN_TIMEOUT"])
-            mongo_client.admin.command("ping")
-            _db = mongo_client[db_name]
-        except (errors.PyMongoError, socket.gaierror, ConnectionRefusedError, socket.timeout, OSError) as e:
-            raise ConnectionError("Could not connect to MongoDB") from e
+    global _db, _client
     
-    return _db
+    if _client is None:
+        _client = MongoClient(current_app.config["MONGO_CONN_STR"], serverSelectionTimeoutMS=current_app.config["MONGO_CONN_TIMEOUT"])
 
+    try:
+        _client.admin.command("ping")
+        if _db is None: _db = _client[db_name]
+    except (errors.PyMongoError, socket.gaierror, ConnectionRefusedError, socket.timeout, OSError) as e:
+        raise ConnectionError("Could not connect to MongoDB") from e
+
+    return _db
 
 def add_entry_to_db(new_entry : Entry):
     upl_entry = new_entry.to_dict()
@@ -30,14 +31,6 @@ def add_entry_to_db(new_entry : Entry):
     except ConnectionError as e:
         raise e from e
     except Exception as e:
-        #double-check whether database has gone down since first connecting
-        try:
-            global _db
-            _db = None
-            test_db = get_db(current_app.config["MONGO_DB_NAME"])
-        except ConnectionError as e:
-            raise e from e
-        else:
-            raise Exception(f"Other exception adding entry to DB: {e}") from e
+        raise Exception(f"Other exception adding entry to DB: {e}") from e
     
     return new_entry_id
