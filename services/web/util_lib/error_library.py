@@ -1,21 +1,21 @@
 ####### ENTRY VALIDATION MESSAGES #######
 ARTIST_MUST_BE_STRING = "Artist name must be a string"
-ARTIST_TOO_LONG = "Artist name must be 255 characters or less"
+ARTIST_TOO_LONG = "Artist name must be {length} characters or less"
 ARTIST_REQUIRED = "Artist name must be present"
 
 ALBUM_MUST_BE_STRING = "Album name must be a string"
-ALBUM_TOO_LONG = "Album name must be 500 characters or less"
+ALBUM_TOO_LONG = "Album name must be {length} characters or less"
 ALBUM_REQUIRED = "Album name must be present"
 
 RELEASE_YEAR_MUST_BE_INT = "Release year must be an integer"
-RELEASE_YEAR_RANGE = "Release year must be between 1900 and 2100"
+RELEASE_YEAR_RANGE = "Release year must be between {min_year} and {max_year}"
 RELEASE_YEAR_REQUIRED = "Release year must be present"
 
 GENRE_MUST_BE_STRING = "Genre must be a string"
-GENRE_TOO_LONG = "Genre must be 255 characters or less"
+GENRE_TOO_LONG = "Genre must be {length} characters or less"
 
 INTEREST_LEVEL_MUST_BE_INT = "Interest level must be an integer"
-INTEREST_LEVEL_RANGE = "Interest level must be 1, 2, or 3"
+INTEREST_LEVEL_RANGE = "Interest level must be one of {valid_levels}"
 
 STARRED_INVALID = "Starred must be true or false"
 

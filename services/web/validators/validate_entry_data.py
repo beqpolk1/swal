@@ -1,5 +1,5 @@
-import re
-import util_lib
+import re, util_lib
+from flask import current_app
 
 def validate_entry_data(entry_data, entry_files) -> list:
     errors = []
@@ -30,8 +30,8 @@ def _validate_artist(artist):
             artist = str(artist)
         except:
             return util_lib.ARTIST_MUST_BE_STRING
-        if len(artist) > 255:
-            return util_lib.ARTIST_TOO_LONG
+        if len(artist) > current_app.config["MAX_ARTIST_LENGTH"]:
+            return util_lib.ARTIST_TOO_LONG.format(length = current_app.config["MAX_ARTIST_LENGTH"])
     else:
         return util_lib.ARTIST_REQUIRED
 
@@ -41,8 +41,8 @@ def _validate_album(album):
             album = str(album)
         except:
             return util_lib.ALBUM_MUST_BE_STRING
-        if len(album) > 500:
-            return util_lib.ALBUM_TOO_LONG
+        if len(album) > current_app.config["MAX_ALBUM_LENGTH"]:
+            return util_lib.ALBUM_TOO_LONG.format(length = current_app.config["MAX_ALBUM_LENGTH"])
     else:
         return util_lib.ALBUM_REQUIRED
 
@@ -52,8 +52,8 @@ def _validate_release_year(release_year):
             release_year = int(release_year)
         except:
             return util_lib.RELEASE_YEAR_MUST_BE_INT
-        if release_year < 1900 or release_year > 2100:
-            return util_lib.RELEASE_YEAR_RANGE
+        if release_year < current_app.config["MIN_RELEASE_YEAR"] or release_year > current_app.config["MAX_RELEASE_YEAR"]:
+            return util_lib.RELEASE_YEAR_RANGE.format(min_year = current_app.config["MIN_RELEASE_YEAR"], max_year = current_app.config["MAX_RELEASE_YEAR"])
     else:
         return util_lib.RELEASE_YEAR_REQUIRED
 
@@ -63,8 +63,8 @@ def _validate_genre(genre):
             genre = str(genre)
         except:
             return util_lib.GENRE_MUST_BE_STRING
-        if len(genre) > 255:
-            return util_lib.GENRE_TOO_LONG
+        if len(genre) > current_app.config["MAX_GENRE_LENGTH"]:
+            return util_lib.GENRE_TOO_LONG.format(length = current_app.config["MAX_GENRE_LENGTH"])
 
 def _validate_interest_level(interest_level):
     if interest_level is not None:
@@ -72,8 +72,8 @@ def _validate_interest_level(interest_level):
             interest_level = int(interest_level)
         except:
             return util_lib.INTEREST_LEVEL_MUST_BE_INT
-        if interest_level not in [1, 2, 3]:
-            return util_lib.INTEREST_LEVEL_RANGE
+        if interest_level not in current_app.config["VALID_INTEREST_LVL"]:
+            return util_lib.INTEREST_LEVEL_RANGE.format(valid_levels = current_app.config["VALID_INTEREST_LVL"])
 
 def _validate_starred(starred):
     if starred is not None:

@@ -16,7 +16,12 @@ class Config:
     FTP_PASSWORD = "swallowth3p4ssword"
     FTP_IMG_DIR = "img"
     
-    ARTIST_LENGTH_LIMIT = 255
+    MAX_ARTIST_LENGTH = 255
+    MAX_ALBUM_LENGTH = 500
+    MAX_RELEASE_YEAR = 2150
+    MIN_RELEASE_YEAR = 1800
+    MAX_GENRE_LENGTH = 255
+    VALID_INTEREST_LVL = [1, 2, 3]
 
 class DevelopmentConfig(Config):
     DEBUG = True
