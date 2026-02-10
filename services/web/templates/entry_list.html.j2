@@ -12,4 +12,16 @@
 
 {% block content %}
     All the entries
+    <br />
+    {{ data }}
+    <br />
+    {% if "errors" in data%}
+    Encountered errors while searching:
+    <ul>
+        {% for error in data["errors"] %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
 {% endblock %}
