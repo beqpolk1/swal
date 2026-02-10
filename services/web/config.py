@@ -23,6 +23,9 @@ class Config:
     MAX_GENRE_LENGTH = 255
     VALID_INTEREST_LVL = [1, 2, 3]
 
+    MIN_Q_LENGTH = 3
+    MAX_Q_LENGTH = 255
+
 class DevelopmentConfig(Config):
     DEBUG = True
 

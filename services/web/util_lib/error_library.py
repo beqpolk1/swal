@@ -1,3 +1,9 @@
+####### SEARCH/FILTER VALIDATION MESSAGES #######
+GENERAL_SEARCH_PARSE_EXCEPTION = "Exception parsing {param} parameter: {exception}"
+
+SEARCH_TEXT_TOO_SHORT = "Text search string must be {length} characters or more"
+SEARCH_TEXT_TOO_LONG = "Text search string must be {length} characters or less"
+
 ####### ENTRY VALIDATION MESSAGES #######
 ARTIST_MUST_BE_STRING = "Artist name must be a string"
 ARTIST_TOO_LONG = "Artist name must be {length} characters or less"

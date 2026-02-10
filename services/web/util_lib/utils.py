@@ -17,6 +17,15 @@ def get_str_or_none(d: dict, key: str):
     val = d.get(key) or None
     return str(val) if val not in ["", None] else None
 
+def get_str_or_none_2(d: dict, key: str) -> str | None:
+    val = d.get(key)
+    if val is None: return None
+    
+    val = val.strip()
+    if val == "": return None
+
+    return val
+
 def get_int_or_none(d: dict, key: str):
     val = d.get(key) or None
     return int(val) if val is not None else None
@@ -24,3 +33,10 @@ def get_int_or_none(d: dict, key: str):
 def get_bool_or_none(d: dict, key: str):
     val = d.get(key) or None
     return str_to_bool(val) if val is not None else None
+
+def get_bool_or_none_2(d: dict, key: str):
+    val = get_str_or_none_2(d, key)
+    if val is None: return None
+
+    return str_to_bool(val)
+
