@@ -48,7 +48,7 @@ def full_search(params : dict):
     except ConnectionError as e:
         raise e from e
     except Exception as e:
-        raise Exception(f"Other exception adding entry to DB: {e}") from e
+        raise Exception(f"Other exception performing search: {e}") from e
     
     return search_results
 
