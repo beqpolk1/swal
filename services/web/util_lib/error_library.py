@@ -1,6 +1,6 @@
 ####### SEARCH/FILTER VALIDATION MESSAGES #######
-GENERAL_SEARCH_PARSE_EXCEPTION = "Exception parsing {param} parameter: {exception}"
 
+SEARCH_PARSE_EXCEPTION = "Exception parsing {param} parameter: {exception}"
 SEARCH_TEXT_TOO_SHORT = "Text search string must be {length} characters or more"
 SEARCH_TEXT_TOO_LONG = "Text search string must be {length} characters or less"
 

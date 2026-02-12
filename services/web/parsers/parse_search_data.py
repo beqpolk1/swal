@@ -25,7 +25,7 @@ def _parse_text_search(params, parse_result : Parse_Result):
             else:
                 parse_result.add_data("text_search", text_search)
     except (TypeError, ValueError) as e:
-        parse_result.add_error(util_lib.GENERAL_SEARCH_PARSE_EXCEPTION.format(param = "text_search", exception = e))
+        parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "text_search", exception = e))
     
 def _parse_starred(params, parse_result : Parse_Result):
     try:
@@ -34,4 +34,4 @@ def _parse_starred(params, parse_result : Parse_Result):
         if starred is not None:
             parse_result.add_data("is_starred", starred)
     except(TypeError, ValueError) as e:
-        parse_result.add_error(util_lib.GENERAL_SEARCH_PARSE_EXCEPTION.format(param = "starred", exception = e))
+        parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "starred", exception = e))
