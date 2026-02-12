@@ -11,14 +11,17 @@
 {% endblock %}
 
 {% block content %}
-    All the entries
-    <br />
-    {{ data }}
-    <br />
-    {% if "errors" in data%}
+    {% if not data.has_errors() %}
+    Matches:
+    <ul>
+        {% for result in data.results %}
+        <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
     Encountered errors while searching:
     <ul>
-        {% for error in data["errors"] %}
+        {% for error in data.errors %}
         <li>{{ error }}</li>
         {% endfor %}
     </ul>
