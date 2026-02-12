@@ -1,5 +1,6 @@
 from classes import Search_Result
 from parsers import parse_search_data
+from .db_interface import full_search
 
 def perform_search(raw_params) -> list:
     parse_result = parse_search_data(raw_params)
@@ -10,10 +11,10 @@ def perform_search(raw_params) -> list:
     if search_result.has_errors():
         return {"errors": search_result.errors}
     else:
-        search_result.add_results(parse_result.result_data.items())
-        return {"entries": search_result.results}
+        search_params = _build_params(parse_result.result_data)
+        return {"entries": full_search(search_params)}
 
-def _build_params(raw_params) -> dict:    
+def _build_params(parsed_params) -> dict:    
     # search fields/filters
       # text-based search:
         # -artist
@@ -32,4 +33,4 @@ def _build_params(raw_params) -> dict:
     
     # validate parameters
     
-    pass
+    return parsed_params

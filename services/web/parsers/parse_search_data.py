@@ -1,7 +1,6 @@
 import util_lib
 from classes import Parse_Result
 from flask import current_app
-import re
 
 def parse_search_data(param_obj) -> Parse_Result:
     parse_result = Parse_Result()
@@ -24,7 +23,7 @@ def _parse_text_search(params, parse_result : Parse_Result):
             elif len(text_search) > current_app.config["MAX_Q_LENGTH"]:
                 parse_result.add_error(util_lib.SEARCH_TEXT_TOO_LONG.format(length = current_app.config["MAX_Q_LENGTH"]))
             else:
-                parse_result.add_data("text_search", re.escape(text_search))
+                parse_result.add_data("text_search", text_search)
     except (TypeError, ValueError) as e:
         parse_result.add_error(util_lib.GENERAL_SEARCH_PARSE_EXCEPTION.format(param = "text_search", exception = e))
     
@@ -33,6 +32,6 @@ def _parse_starred(params, parse_result : Parse_Result):
         starred = util_lib.get_bool_or_none_2(params, "starred")
 
         if starred is not None:
-            parse_result.add_data("starred", starred)
+            parse_result.add_data("is_starred", starred)
     except(TypeError, ValueError) as e:
         parse_result.add_error(util_lib.GENERAL_SEARCH_PARSE_EXCEPTION.format(param = "starred", exception = e))
