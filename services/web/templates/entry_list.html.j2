@@ -11,13 +11,20 @@
 {% endblock %}
 
 {% block content %}
+    <div class="search_bar">
+        [build search features here]
+    </div>
+
     {% if not data.has_errors() %}
-    Matches:
-    <ul>
-        {% for result in data.results %}
-        <li>{{ result }}</li>
-        {% endfor %}
-    </ul>
+
+    {% for entry in data.results %}
+    {% include "entry_card.html.j2" %}
+    {% endfor %}
+
+    <div class="pagination">
+        [build pagination here]
+    </div>
+
     {% else %}
     Encountered errors while searching:
     <ul>

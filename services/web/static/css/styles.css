@@ -113,3 +113,9 @@ div.form_upload > p {
     font-style: italic;
     font-size: .9em;
 }
+
+div.entry_card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

@@ -1,0 +1,51 @@
+<div class="entry_card">
+    <div class="entry_card_starred_ind">
+        Starred: {{ entry.is_starred }}
+    </div>
+
+    <div class="entry_card_artwork">
+        {% if entry.artwork_file %}
+        <img src="{{ macros.media_file(MEDIA_IMG_DIR, entry.artwork_file_name) }}">
+        {% else %}
+        [none]
+        {% endif %}
+    </div>
+
+    <div class="entry_card_title">
+        <div class="entry_card_title_artist">
+            {{ entry.artist }}
+        </div>
+
+        <div class="entry_card_title_album">
+            {{ entry.album }}
+        </div>
+    </div>
+
+    <div class="entry_card_genre">
+        {% if entry.genre is not none %}
+        {{ entry.genre }}
+        {% else %}
+        <span class="none_field">Genre</span>
+        {% endif %}
+    </div>
+
+    <div class="entry_card_release_year">
+        {{ entry.release_year }}
+    </div>
+
+    <div class="entry_card_interest_level">
+        {% if entry.interest_level is not none %}
+        {{ entry.interest_level }}
+        {% else %}
+        <span class="none_field">Interest</span>
+        {% endif %}
+    </div>
+
+    <div class="entry_card_link">
+        {% if entry.link is not none %}
+        [Has Link]
+        {% else %}
+        [No Link]
+        {% endif %}
+    </div>
+</div>
