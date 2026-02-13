@@ -11,7 +11,7 @@ class Entry:
         #optional fields
         self._id = util_lib.get_str_or_none(new_vals, "_id")
         self.genre = util_lib.get_str_or_none(new_vals, "genre")
-        self.interest = util_lib.get_int_or_none(new_vals, "interest_level")
+        self.interest_level = util_lib.get_int_or_none(new_vals, "interest_level")
         self.link = util_lib.get_str_or_none(new_vals, "link")
 
         self.artwork_file = new_files.get("artwork_file")
@@ -26,7 +26,7 @@ class Entry:
             "album": self.album,
             "release_year": self.release_year,
             "genre": self.genre,
-            "interest_level": self.interest,
+            "interest_level": self.interest_level,
             "is_starred": self.is_starred,
             "artwork_file_name": self.artwork_file_name,
             "artwork_file": True if (self.artwork_file) else False,
