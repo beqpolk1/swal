@@ -17,9 +17,11 @@
 
     {% if not data.has_errors() %}
 
-    {% for entry in data.results %}
-    {% include "entry_card.html.j2" %}
-    {% endfor %}
+    <div class="entry_card_list">
+        {% for entry in data.results %}
+        {% include "entry_card.html.j2" %}
+        {% endfor %}
+    </div>
 
     <div class="pagination">
         [build pagination here]

@@ -1,6 +1,6 @@
 <div class="entry_card">
-    <div class="entry_card_starred_ind">
-        Starred: {{ entry.is_starred }}
+    <div class="entry_card_starred_ind {{'starred' if entry.is_starred else ''}}">
+        {{ '★' if entry.is_starred else '☆' }}
     </div>
 
     <div class="entry_card_artwork">
@@ -41,11 +41,11 @@
         {% endif %}
     </div>
 
-    <div class="entry_card_link">
+    <div class="entry_card_link {{'has_link' if entry.link is not none else ''}}">
         {% if entry.link is not none %}
-        [Has Link]
+        <a href="{{entry.link}}" target="_blank">↗</a>
         {% else %}
-        [No Link]
+        ↗
         {% endif %}
     </div>
 </div>
