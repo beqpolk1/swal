@@ -6,8 +6,16 @@ body {
     display: none;
 }
 
+div.header {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    background-color: white;
+    padding-top: 10px
+}
+
 div.top_banner {
-    margin: 10px 10px 0px 10px;
+    margin: 0px 10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -126,6 +134,12 @@ div.entry_card {
     align-items: center;
     max-height: 200px;
     margin: 10px 0px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #333333;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
 div.entry_card_starred_ind {
@@ -173,7 +187,7 @@ div.entry_card_genre {
 }
 
 span.none_field {
-    color: darkgrey;
+    color: slategray;
     font-style: italic;
     font-size: 1.1rem;
 }
@@ -191,7 +205,7 @@ div.entry_card_interest_level {
 div.entry_card_link {
     width: 5%;
     font-size: 2rem;
-    color: darkgrey;
+    color: slategray;
 }
 
 div.entry_card_link > a {
@@ -204,6 +218,6 @@ div.entry_card_link > a:visited {
 }
 
 div.entry_card_link > a:hover {
-    color: navy;
+    color: rgb(74, 74, 180);
 }
 
