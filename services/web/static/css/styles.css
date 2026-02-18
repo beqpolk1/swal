@@ -153,8 +153,28 @@ div.starred {
     font-weight: bold;
 }
 
+a.entry_card_link_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    width: 30%;
+    transition: transform 0.2s ease;
+}
+
+a.entry_card_link_wrapper:hover {
+    transform: translateY(-5px);
+}
+
+a.entry_card_link_wrapper:visited {
+    text-decoration: inherit;
+    color: inherit;
+}
+
 div.entry_card_artwork {
-    width: 15%;
+    width: 50%;
     height: 150px;
 }
 
@@ -166,7 +186,7 @@ div.entry_card_artwork > img {
 }
 
 div.entry_card_title {
-    width: 15%;
+    width: 50%;
     margin: 0px 5% 0px 2%;
 }
 
