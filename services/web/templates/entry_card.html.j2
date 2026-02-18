@@ -3,26 +3,28 @@
         {{ '★' if entry.is_starred else '☆' }}
     </div>
 
-    <a class="entry_card_link_wrapper" href="{{url_for(endpoint = 'entries', _id=entry._id)}}">
-        <div class="entry_card_artwork">
-            {% if entry.artwork_file %}
-            <img src="{{ macros.media_file(MEDIA_IMG_DIR, entry.artwork_file_name) }}">
-            {% else %}
-            [none]
-            {% endif %}
-        </div>
-
-    
-        <div class="entry_card_title">
-            <div class="entry_card_title_artist">
-                {{ entry.artist }}
+    <div class="entry_card_link_wrapper">
+        <a class="entry_card_link" href="{{url_for(endpoint = 'entries', _id=entry._id)}}">
+            <div class="entry_card_artwork">
+                {% if entry.artwork_file %}
+                <img src="{{ macros.media_file(MEDIA_IMG_DIR, entry.artwork_file_name) }}">
+                {% else %}
+                [none]
+                {% endif %}
             </div>
 
-            <div class="entry_card_title_album">
-                {{ entry.album }}
+        
+            <div class="entry_card_title">
+                <div class="entry_card_title_artist">
+                    {{ entry.artist }}
+                </div>
+
+                <div class="entry_card_title_album">
+                    {{ entry.album }}
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </div>
 
     <div class="entry_card_genre">
         {% if entry.genre is not none %}
