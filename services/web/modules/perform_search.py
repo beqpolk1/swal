@@ -1,19 +1,27 @@
 from classes import Search_Result, Entry
-from parsers import parse_search_data
-from .db_interface import full_search
+from parsers import parse_search_data, parse_object_id
+from .db_interface import full_search, single_search
 import util_lib
 
-def perform_search(raw_params) -> list:
-    parse_result = parse_search_data(raw_params)
+def perform_search(raw_params, single_mode : bool) -> list:
+    if (single_mode and "_id" in raw_params):
+      parse_result = parse_object_id(raw_params.get("_id"))
+    else:
+      parse_result = parse_search_data(raw_params)
 
     search_result = Search_Result()
     search_result.add_errors(parse_result.errors)
 
     if not search_result.has_errors():
-        search_params = _build_params(parse_result.result_data)
+        if single_mode:
+          search_func = single_search
+          search_params = parse_result.result_data
+        else:
+          search_func = full_search
+          search_params = _build_params(parse_result.result_data)
 
         try:
-          for result in full_search(search_params):
+          for result in search_func(search_params):
               new_entry = Entry(result, {})
               if result.get("artwork_file"):
                 new_entry.artwork_file_name = result.get("artwork_file_name")

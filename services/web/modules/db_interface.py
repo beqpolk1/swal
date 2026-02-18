@@ -1,6 +1,7 @@
 from pymongo import MongoClient, errors
 from classes import Entry
 from flask import current_app
+from bson import ObjectId
 import socket, re
 
 _client = None
@@ -51,6 +52,18 @@ def full_search(params : dict):
         raise Exception(f"Other exception performing search: {e}") from e
     
     return results_cursor
+
+def single_search(params : dict):
+    try:
+        db_conn = get_db(current_app.config["MONGO_DB_NAME"])
+        entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
+        result = entries.find({"_id": ObjectId(params.get("_id"))})
+    except ConnectionError as e:
+        raise e from e
+    except Exception as e:
+        raise Exception(f"Other exception finding document: {e}") from e
+    
+    return result
 
 def _build_query(params : dict):
     filter_dict = {}

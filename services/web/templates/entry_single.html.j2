@@ -11,16 +11,27 @@
 {% endblock %}
 
 {% block content %}
-    Just entry {{ id }}
-    <br />
-    {{ data }}
-    <br />
-    {% if "errors" in data%}
+    {% if not data.has_errors() %}
+
+    <div class="entry_panel">
+        <div>
+            {{ data.results[0]._id }}
+        </div>
+        <div>
+            {{ data.results[0].artist }}
+        </div>
+        <div>
+            {{ data.results[0].album }}
+        </div>
+    </div>
+
+    {% else %}
     Encountered errors while searching:
     <ul>
-        {% for error in data["errors"] %}
+        {% for error in data.errors %}
         <li>{{ error }}</li>
         {% endfor %}
     </ul>
     {% endif %}
+
 {% endblock %}
