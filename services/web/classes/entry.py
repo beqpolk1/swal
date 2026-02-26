@@ -6,7 +6,7 @@ class Entry:
         self.artist = str(new_vals.get("artist"))
         self.album = str(new_vals.get("album"))
         self.release_year = int(new_vals.get("release_year"))
-        self.obtained = util_lib.str_to_bool(new_vals.get("is_obtained"))
+        self.is_obtained = util_lib.str_to_bool(new_vals.get("is_obtained"))
 
         #optional fields
         self._id = util_lib.get_str_or_none(new_vals, "_id")
@@ -30,7 +30,7 @@ class Entry:
             "is_starred": self.is_starred,
             "artwork_file_name": self.artwork_file_name,
             "artwork_file": True if (self.artwork_file) else False,
-            "is_obtained": self.obtained,
+            "is_obtained": self.is_obtained,
             "link": self.link
         }
 
