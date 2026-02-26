@@ -12,18 +12,49 @@
 
 {% block content %}
     {% if not data.has_errors() %}
+    {% set my_entry = data.results[0] %}
 
     <div class="entry_panel">
-        <div>
-            {{ data.results[0]._id }}
+        <div class="entry_panel_info_top">
+            <div class="entry_panel_info_artwork">
+                {% if my_entry.artwork_file %}
+                <img src="{{ macros.media_file(MEDIA_IMG_DIR, my_entry.artwork_file_name) }}">
+                {% else %}
+                [none]
+                {% endif %}
+            </div>
+
+            <div class="entry_panel_info_title">
+                {{ my_entry.album }} <br />
+                by <br />
+                {{ my_entry.artist }}
+            </div>
+
+            <div class="entry_panel_info_properties">
+                {{ 'Interest Level: ' ~ my_entry.interest_level if my_entry.interest_level is not none else '<span class="none_field">Interest</span>' }} <br />
+                Starred: {{ '★' if my_entry.is_starred else '☆' }} <br />
+                Obtained: {{ '☑' if my_entry.is_obtained else '☐' }}
+            </div>
         </div>
-        <div>
-            {{ data.results[0].artist }}
-        </div>
-        <div>
-            {{ data.results[0].album }}
+
+        <div class="entry_panel_info_bot">
+            <div>
+                {{ 'Genre: ' + my_entry.genre if my_entry.genre is not none else '<span class="none_field">Genre</span>' }}
+            </div>
+            <div>
+                Release Year: {{ my_entry.release_year }}
+            </div>
+            <div>
+                {% if my_entry.link is not none %}
+                <a href="{{ my_entry.link }}" target="_blank">External Link</a>
+                {% else %}
+                <span class="none_field">External Link</span>
+                {% endif %}
+            </div>
         </div>
     </div>
+
+    <div>[return to search]</div>
 
     {% else %}
     Encountered errors while searching:
