@@ -1,5 +1,5 @@
 <div class="entry_card">
-    <div class="entry_card_starred_ind {{'starred' if entry.is_starred else ''}}">
+    <div class="entry_card_starred_ind starred_ind {{'starred' if entry.is_starred else ''}}">
         {{ '★' if entry.is_starred else '☆' }}
     </div>
 
@@ -15,11 +15,11 @@
         
             <div class="entry_card_title">
                 <div class="entry_card_title_artist">
-                    {{ entry.artist }}
+                    <span class="entry_emph_1">{{ entry.artist }}</span>
                 </div>
 
                 <div class="entry_card_title_album">
-                    {{ entry.album }}
+                    <span class="entry_emph_2">{{ entry.album }}</span>
                 </div>
             </div>
         </a>

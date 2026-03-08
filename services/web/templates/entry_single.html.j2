@@ -1,6 +1,6 @@
 {% extends "base.html.j2" %}
 
-{% block title %}SWaL - {{id}}{% endblock %}
+{% block title %}SWaL - {{ data.results[0].artist + ' - ' + data.results[0].album if not data.has_errors() else 'Errors'}}{% endblock %}
 
 {% block scripts %}
 {% endblock %}
@@ -25,28 +25,28 @@
             </div>
 
             <div class="entry_panel_info_title">
-                {{ my_entry.album }} <br />
-                by <br />
-                {{ my_entry.artist }}
+                <span class="entry_emph_1">{{ my_entry.album }}</span><br />
+                <span style="font-style: italic;">by</span><br />
+                <span class="entry_emph_1">{{ my_entry.artist }}</span>
             </div>
 
             <div class="entry_panel_info_properties">
                 {{ 'Interest Level: ' ~ my_entry.interest_level if my_entry.interest_level is not none else '<span class="none_field">Interest</span>' }} <br />
-                Starred: {{ '★' if my_entry.is_starred else '☆' }} <br />
-                Obtained: {{ '☑' if my_entry.is_obtained else '☐' }}
+                Starred: <span class="starred_ind {{ 'starred' if my_entry.is_starred else ''}}">{{ '★' if my_entry.is_starred else '☆' }}</span> <br />
+                Obtained: <span class="obtained_ind">{{ '☑' if my_entry.is_obtained else '☐' }}</span>
             </div>
         </div>
 
         <div class="entry_panel_info_bot">
             <div>
-                {{ 'Genre: ' + my_entry.genre if my_entry.genre is not none else '<span class="none_field">Genre</span>' }}
+                {{ '<span style="font-weight: bold">Genre:</span> ' + my_entry.genre if my_entry.genre is not none else '<span class="none_field">Genre</span>' }}
             </div>
             <div>
-                Release Year: {{ my_entry.release_year }}
+                <span style="font-weight: bold">Release Year</span>: {{ my_entry.release_year }}
             </div>
             <div>
                 {% if my_entry.link is not none %}
-                <a href="{{ my_entry.link }}" target="_blank">External Link</a>
+                <a href="{{ my_entry.link }}" target="_blank">External Link ↗</a>
                 {% else %}
                 <span class="none_field">External Link</span>
                 {% endif %}
