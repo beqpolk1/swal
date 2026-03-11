@@ -3,7 +3,7 @@ from parsers import parse_search_data, parse_object_id
 from .db_interface import full_search, single_search
 import util_lib
 
-def perform_search(raw_params, single_mode : bool) -> list:
+def perform_search(raw_params, single_mode : bool) -> Search_Result:
     if (single_mode and "_id" in raw_params):
       parse_result = parse_object_id(raw_params.get("_id"))
     else:
