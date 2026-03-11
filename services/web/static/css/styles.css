@@ -250,6 +250,27 @@ div.entry_card_link > a:hover, div.entry_panel_info_bot a:hover {
 div.entry_panel {
     width: 96%;
     padding: 10px 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.entry_panel_artwork {
+    width: 30%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+div.entry_panel_artwork > img {
+    max-height: 300px;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    display: block;
+}
+
+div.entry_panel_info {
+    width: 60%;
 }
 
 div.entry_panel_info_top {
@@ -258,28 +279,13 @@ div.entry_panel_info_top {
     align-items: center;
 }
 
-div.entry_panel_info_artwork {
-    width: 30%;
-    padding-right: 10px;
-    box-sizing: border-box;
-}
-
-div.entry_panel_info_artwork > img {
-    max-height: 300px;
-    max-width: 100%;
-    margin-right: 10px;
-    height: auto;
-    width: auto;
-    display: block;
-}
-
 div.entry_panel_info_title {
-    width: 30%;
+    width: 50%;
     font-size: 1.2rem;
 }
 
 div.entry_panel_info_properties {
-    width: 30%;
+    width: 50%;
     font-size: 1.2rem;
 }
 
@@ -288,13 +294,10 @@ div.entry_panel_info_properties {
 }
 
 div.entry_panel_info_bot {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20px;
+    margin-top: 25px;
     font-size: 1.2rem;
 }
 
 div.entry_panel_info_bot > div {
-    width: 30%;
+    margin-top: 10px;
 }
