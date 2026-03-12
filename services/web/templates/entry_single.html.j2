@@ -58,7 +58,9 @@
         </div>
     </div>
 
-    <div>[return to search]</div>
+    <div>
+        <a href="{{ url_for(endpoint = 'entries') }}{{ '?' + prev_search if prev_search else '' }}">[return to search]</a>
+    </div>
 
     {% else %}
     Encountered errors while searching:
