@@ -2,12 +2,13 @@ import util_lib
 from classes import Parse_Result
 from flask import current_app
 
-def parse_search_data(param_obj) -> Parse_Result:
+def parse_search_string(param_obj) -> Parse_Result:
     parse_result = Parse_Result()
 
     for func in [
         lambda: _parse_text_search(param_obj, parse_result),
-        lambda: _parse_starred(param_obj, parse_result)
+        lambda: _parse_starred(param_obj, parse_result),
+        lambda: _parse_limit(param_obj, parse_result)
     ]:
         func()
 
@@ -35,3 +36,16 @@ def _parse_starred(params, parse_result : Parse_Result):
             parse_result.add_data("is_starred", starred)
     except(TypeError, ValueError) as e:
         parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "starred", exception = e))
+
+def _parse_limit(params, parse_result : Parse_Result):
+    try:
+        limit = util_lib.get_int_or_none_2(params, "limit")
+
+        if limit is not None:
+            if (limit > current_app.config["SEARCH_LIMIT_MAX"] or limit < current_app.config["SEARCH_LIMIT_MIN"]):
+                parse_result.add_error(util_lib.SEARCH_LIMIT_OUT_OF_BOUNDS.format(min = current_app.config["SEARCH_LIMIT_MIN"], max = current_app.config["SEARCH_LIMIT_MAX"]))
+            else:
+                parse_result.add_data("limit", limit)
+    
+    except(TypeError, ValueError) as e:
+        parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "limit", exception = e))

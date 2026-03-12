@@ -1,5 +1,5 @@
 from classes import Search_Result, Entry
-from parsers import parse_search_data, parse_object_id
+from parsers import parse_search_string, parse_object_id
 from .db_interface import full_search, single_search
 import util_lib
 
@@ -7,7 +7,7 @@ def perform_search(raw_params, single_mode : bool) -> Search_Result:
     if (single_mode and "_id" in raw_params):
       parse_result = parse_object_id(raw_params.get("_id"))
     else:
-      parse_result = parse_search_data(raw_params)
+      parse_result = parse_search_string(raw_params)
 
     search_result = Search_Result()
     search_result.add_errors(parse_result.errors)
