@@ -38,14 +38,14 @@ def add_entry_to_db(new_entry : Entry):
 
 def full_search(params : dict):
     try:
-       collection_filter = _build_query(params)
+       collection_filter = _build_query(params["user_params"])
     except Exception as e:
        raise Exception(f"Exception constructing search query: {e}") from e
     
     try:
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
-        results_cursor = entries.find(collection_filter)
+        results_cursor = entries.find(collection_filter).limit(params["limit"])
     except ConnectionError as e:
         raise e from e
     except Exception as e:

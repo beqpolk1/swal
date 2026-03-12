@@ -15,6 +15,10 @@ class Config:
     FTP_USERNAME = "swal_image"
     FTP_PASSWORD = "swallowth3p4ssword"
     FTP_IMG_DIR = "img"
+
+    DEFAULT_SEARCH_LIMIT = 10
+    SEARCH_LIMIT_MAX = 100
+    SEARCH_LIMIT_MIN = 1
     
     MAX_ARTIST_LENGTH = 255
     MAX_ALBUM_LENGTH = 500

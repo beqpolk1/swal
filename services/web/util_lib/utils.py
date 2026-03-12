@@ -30,6 +30,11 @@ def get_int_or_none(d: dict, key: str):
     val = d.get(key) or None
     return int(val) if val is not None else None
 
+def get_int_or_none_2(d: dict, key: str):
+    val = get_str_or_none_2(d, key)
+    if val is None: return None
+    return int(val)
+
 def get_bool_or_none(d: dict, key: str):
     val = d.get(key) or None
     return str_to_bool(val) if val is not None else None

@@ -1,6 +1,7 @@
 from classes import Search_Result, Entry
 from parsers import parse_search_string, parse_object_id
 from .db_interface import full_search, single_search
+from flask import current_app
 import util_lib
 
 def perform_search(raw_params, single_mode : bool) -> Search_Result:
@@ -33,7 +34,18 @@ def perform_search(raw_params, single_mode : bool) -> Search_Result:
     
     return search_result
 
-def _build_params(parsed_params) -> dict:    
+def _build_params(parsed_params) -> dict:
+    final_params = {}
+
+    if "limit" in parsed_params:
+       final_params["limit"] = parsed_params.pop("limit")
+       final_params["user_params"] = parsed_params
+    
+    else:
+       final_params["limit"] = current_app.config["DEFAULT_SEARCH_LIMIT"]
+       final_params["user_params"] = parsed_params
+
+
     # search fields/filters
       # text-based search:
         # -artist
@@ -52,4 +64,4 @@ def _build_params(parsed_params) -> dict:
     
     # validate parameters
     
-    return parsed_params
+    return final_params

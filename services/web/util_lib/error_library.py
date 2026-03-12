@@ -5,6 +5,8 @@ SEARCH_PARSE_EXCEPTION = "Exception parsing {param} parameter: {exception}"
 SEARCH_TEXT_TOO_SHORT = "Text search string must be {length} characters or more"
 SEARCH_TEXT_TOO_LONG = "Text search string must be {length} characters or less"
 
+SEARCH_LIMIT_OUT_OF_BOUNDS = "Limit on search results must be more than {min} and less than {max}"
+
 INVALID_OBJECT_ID = "Exception parsing _id value: {exception}"
 
 ####### ENTRY VALIDATION MESSAGES #######
