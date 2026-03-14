@@ -1,11 +1,15 @@
-from pymongo import MongoClient, errors
+from pymongo import MongoClient, errors, collation
+import pymongo
 from classes import Entry
 from flask import current_app
 from bson import ObjectId
 import socket, re
 
+from pprint import pprint
+
 _client = None
 _db = None
+_case_insensitive = collation.Collation(locale='en', strength=2)
 
 def get_db(db_name : str):
     global _db, _client
@@ -28,7 +32,9 @@ def add_entry_to_db(new_entry : Entry):
     try:
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
+
         new_entry_id = entries.insert_one(upl_entry).inserted_id
+
     except ConnectionError as e:
         raise e from e
     except Exception as e:
@@ -38,14 +44,20 @@ def add_entry_to_db(new_entry : Entry):
 
 def full_search(params : dict):
     try:
-       collection_filter = _build_query(params["user_params"])
+       find_filter = _build_filter(params["search_params"], params["cursor"])
+       search_limit = params["limit"]
+       sort_list = _build_sort_list(params["cursor"])
+       print(f"[DEBUG] sort_list = {pprint(sort_list)}", flush=True)
+
     except Exception as e:
        raise Exception(f"Exception constructing search query: {e}") from e
     
     try:
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
-        results_cursor = entries.find(collection_filter).limit(params["limit"])
+
+        results_cursor = entries.find(find_filter).limit(search_limit).sort(sort_list).collation(_case_insensitive)
+
     except ConnectionError as e:
         raise e from e
     except Exception as e:
@@ -65,17 +77,31 @@ def single_search(params : dict):
     
     return result
 
-def _build_query(params : dict):
-    filter_dict = {}
 
-    if len(params) > 0:
-        and_list = []
 
+def _build_filter(search_params : dict, cursor):
+    final_list = []
+    
+    #print(f"[DEBUG] cursor = {pprint(cursor)}", flush=True)
+
+    final_list.extend(_build_search_params(search_params))
+    final_list.extend(_build_cursor_params(cursor))
+
+    filter_dict = { }
+    if len(final_list) > 0: filter_dict["$and"] = final_list
+
+    #print(f"[DEBUG] filter_dict = {pprint(filter_dict)}", flush=True)
+    return filter_dict
+
+def _build_search_params(search_params: dict) -> list:
+    and_list = []
+
+    if len(search_params) > 0:
         # literal text match search on supported fields
-        if ("text_search" in params):
+        if ("text_search" in search_params):
             search_or_list = []
             searchable_fields = ["artist", "album", "genre", "link"]
-            search_dict = { "$regex": re.escape(params["text_search"]), "$options": "i"}
+            search_dict = { "$regex": re.escape(search_params["text_search"]), "$options": "i"}
 
             for field in searchable_fields:
                 search_or_list.append({ field: search_dict })
@@ -85,9 +111,50 @@ def _build_query(params : dict):
         # boolean match search on supported fields
         boolean_fields = ["is_starred", "obtained"]
         for field in boolean_fields:
-            if (field in params):
-                and_list.append({field: params[field]})
+            if (field in search_params):
+                and_list.append({field: search_params[field]})
 
-        filter_dict["$and"] = and_list
+    return and_list
 
-    return filter_dict
+def _build_cursor_params(cursor) -> list:
+    or_list = []
+    prev_fields = []
+
+    for item in cursor["fields"]:
+        if "last_val" in item:
+            # ...and (
+            # artist > last_val
+            # or (artist = last_val and album > last_val)
+            # or (artist = last_val and album = last_val and _id >  last_val)
+            # )
+            
+            field_and_list = []
+
+            for prev_field in prev_fields:
+                field_and_list.append( { prev_field["field"] : prev_field["last_val"] } )
+            
+            field_and_list.append({ item["field"] : { "$gt" if item["order"] == "asc" else "$lt": item["last_val"]} })
+
+            prev_fields.append(item)            
+            or_list.append({ "$and": field_and_list })
+    
+    ret_list = []
+    if len(or_list) > 0: ret_list.append({ "$or": or_list })
+    return ret_list
+
+# cursor structure:
+# {
+  # fields: [
+    # { field: "artist", order: "asc", last_val: <val> },
+    # { field: "album", order: "asc", last_val: <val> },
+    # { field: "_id", order: "asc", last_val: <val> }
+  # ]
+# }
+
+def _build_sort_list(cursor) -> list:
+    sort_list = []
+
+    for item in cursor["fields"]:
+        sort_list.append(( item["field"], pymongo.ASCENDING if item["order"] == "asc" else pymongo.DESCENDING ))
+
+    return sort_list
