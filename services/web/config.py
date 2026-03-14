@@ -19,9 +19,18 @@ class Config:
     DEFAULT_SEARCH_LIMIT = 10
     SEARCH_LIMIT_MAX = 100
     SEARCH_LIMIT_MIN = 1
+
+    DEFAULT_SEARCH_CURSOR = {
+        "fields": [
+            { "field": "artist", "order": "asc"},
+            { "field": "album", "order": "asc" },
+            { "field": "_id", "order": "asc",}
+        ]
+    }
     CURSOR_FIELD_MAX = 5
 
     VALID_SORT_ORDER = ("asc", "desc")
+    DEFAULT_SORT_ORDER = "asc"
     
     MAX_ARTIST_LENGTH = 255
     MAX_ALBUM_LENGTH = 500
