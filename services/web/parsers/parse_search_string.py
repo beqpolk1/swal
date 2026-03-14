@@ -1,6 +1,7 @@
 import util_lib
 from classes import Parse_Result
 from flask import current_app
+import json, binascii
 
 def parse_search_string(param_obj) -> Parse_Result:
     parse_result = Parse_Result()
@@ -8,7 +9,8 @@ def parse_search_string(param_obj) -> Parse_Result:
     for func in [
         lambda: _parse_text_search(param_obj, parse_result),
         lambda: _parse_starred(param_obj, parse_result),
-        lambda: _parse_limit(param_obj, parse_result)
+        lambda: _parse_limit(param_obj, parse_result),
+        lambda: _parse_full_cursor(param_obj, parse_result)
     ]:
         func()
 
@@ -49,3 +51,73 @@ def _parse_limit(params, parse_result : Parse_Result):
     
     except(TypeError, ValueError) as e:
         parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "limit", exception = e))
+
+# cursor structure:
+# {
+  # fields: [
+    # { field: "artist", order: "asc", last_val: <val> },
+    # { field: "album", order: "asc", last_val: <val> },
+    # { field: "_id", order: "asc", last_val: <val> }
+  # ]
+# }
+# cursor should arrive base64 encoded
+# decode -> deserialize -> verify structure
+
+def _parse_full_cursor(params, parse_result : Parse_Result):
+    try:
+        cursor = util_lib.get_str_or_none_2(params, "cursor")
+
+        if cursor is not None:
+            cursor_obj = util_lib.base64_enc_to_dict(cursor)
+            _parse_cursor_structure(cursor_obj, parse_result)
+
+    except binascii.Error as e:
+        parse_result.add_error(util_lib.CURSOR_BASE64_DECODE_EXCEPTION.format(exception = e))
+    except UnicodeDecodeError as e:
+        parse_result.add_error(util_lib.CURSOR_TEXT_DECODE_EXCEPTION.format(exception = e))
+    except json.JSONDecodeError as e:
+        parse_result.add_error(util_lib.CURSOR_JSON_DECODE_EXCEPTION.format(exception = e))
+    except(TypeError, ValueError) as e:
+        parse_result.add_error(util_lib.SEARCH_PARSE_EXCEPTION.format(param = "cursor", exception = e))            
+
+def _parse_cursor_structure(cursor_obj, parse_result):
+    if not isinstance(cursor_obj, dict):
+        parse_result.add_error(util_lib.CURSOR_NOT_DICTIONARY)
+        return
+    
+    if not "fields" in cursor_obj:
+        parse_result.add_error(util_lib.CURSOR_DOESNT_HAVE_FIELDS)
+        return
+
+    if not isinstance(cursor_obj["fields"], list):
+        parse_result.add_error(util_lib.CURSOR_FIELDS_NOT_LIST)
+        return
+    
+    if len(cursor_obj["fields"] > current_app.config["CURSOR_FIELD_MAX"]):
+        parse_result.add_error(util_lib.CURSOR_TOO_MANY_FIELDS.format(max = current_app.config["CURSOR_FIELD_MAX"]))
+        return
+
+    error_flag = False
+    for item in cursor_obj["fields"]:
+        if not isinstance(item, dict):
+            parse_result.add_error(util_lib.CURSOR_FIELD_ITEM_NOT_DICT.format(element = item))
+            error_flag = True
+            continue
+
+        if not "field" in item:
+            parse_result.add_error(util_lib.CURSOR_FIELD_ITEM_MISSING_FIELD.format(element = item))
+            error_flag = True
+            continue
+
+        if "order" in item:
+            item["order"] = item["order"].lower()
+            if item["order"] not in current_app.config["VALID_SORT_ORDER"]:
+                parse_result.add_error(util_lib.CURSOR_FIELD_ITEM_INVALID_ORDER.format(element = item))
+                error_flag = True
+                continue
+        
+        if "last_val" in item:
+            # TODO: validation on value for last_val?
+            pass
+    
+    if not error_flag: parse_result.add_data("cursor", cursor_obj)

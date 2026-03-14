@@ -7,6 +7,18 @@ SEARCH_TEXT_TOO_LONG = "Text search string must be {length} characters or less"
 
 SEARCH_LIMIT_OUT_OF_BOUNDS = "Limit on search results must be more than {min} and less than {max}"
 
+CURSOR_BASE64_DECODE_EXCEPTION = "Exception decoding cursor from base64: {exception}"
+CURSOR_TEXT_DECODE_EXCEPTION = "Exception decoding cursor to utf-8 text: {exception}"
+CURSOR_JSON_DECODE_EXCEPTION = "Exception decoding cursor text to JSON: {exception}"
+
+CURSOR_NOT_DICTIONARY = "Pagination cursor must be a dictionary"
+CURSOR_DOESNT_HAVE_FIELDS = "Pagination cursor must contain element 'fields'"
+CURSOR_FIELDS_NOT_LIST = "Pagination cursor 'fields' element must be a list type"
+CURSOR_TOO_MANY_FIELDS = "Pagination cursor 'fields' element must have {max} elements or less"
+CURSOR_FIELD_ITEM_NOT_DICT = "Pagination cursor 'fields' element {element} is not a dictionary"
+CURSOR_FIELD_ITEM_MISSING_FIELD = "Pagination cursor 'fields' element {element} does not have 'field' property"
+CURSOR_FIELD_ITEM_INVALID_ORDER = "Pagination cursor 'fields' element {element} has an invalid ordering value"
+
 INVALID_OBJECT_ID = "Exception parsing _id value: {exception}"
 
 ####### ENTRY VALIDATION MESSAGES #######
