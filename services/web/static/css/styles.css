@@ -127,6 +127,10 @@ div.entry_card_list {
     padding: 0px 2%;
 }
 
+div.pagination {
+    margin-bottom: 80px
+}
+
 div.entry_card {
     display: flex;
     flex-direction: row;
