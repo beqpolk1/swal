@@ -3,10 +3,17 @@ class Search_Result:
         self.errors = []
         self.results = []
 
+        self.pages = {
+            "prev": None,
+            "next": None,
+            "limit": None
+        }
+
     def to_dict(self):
         return {
             "errors": self.errors,
-            "results": self.results
+            "results": self.results,
+            "pages": self.pages
         }
     
     def add_error(self, new_err : str):
