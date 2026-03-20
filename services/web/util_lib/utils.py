@@ -51,3 +51,10 @@ def base64_enc_to_dict(base64_enc: str) -> dict:
     decoded_text = decoded_bytes.decode("utf-8")
     obj = json.loads(decoded_text)
     return obj
+
+def dict_to_base64_enc(obj: dict) -> str:
+    json_str = json.dumps(obj, separators=(",", ":"))
+    json_bytes = json_str.encode("utf-8")
+    b64_bytes = base64.urlsafe_b64encode(json_bytes)
+    b64_str = b64_bytes.decode("ascii")
+    return b64_str
