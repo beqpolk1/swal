@@ -12,6 +12,9 @@ class Parse_Result:
     def add_error(self, new_err : str):
         self.errors.append(new_err)
 
+    def add_errors(self, new_errors : list):
+        self.errors.extend(new_errors)
+
     def has_errors(self) -> bool:
         return len(self.errors) > 0
     
