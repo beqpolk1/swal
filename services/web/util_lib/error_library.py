@@ -18,7 +18,11 @@ CURSOR_TOO_MANY_FIELDS = "Pagination cursor 'fields' element must have {max} ele
 CURSOR_FIELD_ITEM_NOT_DICT = "Pagination cursor 'fields' element {element} is not a dictionary"
 CURSOR_FIELD_ITEM_MISSING_FIELD = "Pagination cursor 'fields' element {element} does not have 'field' property"
 CURSOR_FIELD_ITEM_INVALID_ORDER = "Pagination cursor 'fields' element {element} has an invalid ordering value"
+CURSOR_HAS_PREV_MISSING = "Pagination cursor must contain element 'has_prev'"
+CURSOR_HAS_NEXT_MISSING = "Pagination cursor must contain element 'has_next'"
+CURSOR_FIELD_MUST_BE_BOOLEAN = "Pagination cursor element {element} must be a boolean value"
 
+OBJECT_ID_REQUIRED = "Object ID must be present"
 INVALID_OBJECT_ID = "Exception parsing _id value: {exception}"
 
 ####### ENTRY VALIDATION MESSAGES #######

@@ -4,7 +4,6 @@ from classes import Entry
 from flask import current_app
 from bson import ObjectId
 import socket, re
-
 from pprint import pprint
 
 _client = None
@@ -44,32 +43,32 @@ def add_entry_to_db(new_entry : Entry):
 
 def full_search(params : dict):
     try:
-       find_filter = _build_filter(params["search_params"], params["cursor"])
-       search_limit = params["limit"]
-       sort_list = _build_sort_list(params["cursor"])
-       print(f"[DEBUG] sort_list = {pprint(sort_list)}", flush=True)
+       find_filter = _build_filter(params["search_params"], params["search_cursor"])
+       search_limit = params["db_limit"]
+       sort_list = _build_sort_list(params["search_cursor"])
+       # print(f"[DEBUG] sort_list = {pprint(sort_list)}", flush=True)
 
     except Exception as e:
-       raise Exception(f"Exception constructing search query: {e}") from e
+       raise Exception(f"Exception constructing DB query: {e}") from e
     
     try:
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
 
-        results_cursor = entries.find(find_filter).limit(search_limit).sort(sort_list).collation(_case_insensitive)
+        db_cursor = entries.find(find_filter).limit(search_limit).sort(sort_list).collation(_case_insensitive)
 
     except ConnectionError as e:
         raise e from e
     except Exception as e:
         raise Exception(f"Other exception performing search: {e}") from e
     
-    return results_cursor
+    return db_cursor
 
 def single_search(params : dict):
     try:
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
-        result = entries.find({"_id": ObjectId(params.get("_id"))})
+        result = entries.find_one({"_id": ObjectId(params.get("_id"))})
     except ConnectionError as e:
         raise e from e
     except Exception as e:
@@ -79,21 +78,21 @@ def single_search(params : dict):
 
 
 
-def _build_filter(search_params : dict, cursor):
+def _build_filter(search_params : dict, search_cursor):
     final_list = []
     
-    #print(f"[DEBUG] cursor = {pprint(cursor)}", flush=True)
+    # print(f"[DEBUG] cursor = {pprint(search_cursor)}", flush=True)
 
-    final_list.extend(_build_search_params(search_params))
-    final_list.extend(_build_cursor_params(cursor))
+    final_list.extend(_build_search_filters(search_params))
+    final_list.extend(_build_cursor_filters(search_cursor))
 
     filter_dict = { }
     if len(final_list) > 0: filter_dict["$and"] = final_list
 
-    #print(f"[DEBUG] filter_dict = {pprint(filter_dict)}", flush=True)
+    # print(f"[DEBUG] filter_dict = {pprint(filter_dict)}", flush=True)
     return filter_dict
 
-def _build_search_params(search_params: dict) -> list:
+def _build_search_filters(search_params: dict) -> list:
     and_list = []
 
     if len(search_params) > 0:
@@ -116,11 +115,11 @@ def _build_search_params(search_params: dict) -> list:
 
     return and_list
 
-def _build_cursor_params(cursor) -> list:
+def _build_cursor_filters(search_cursor) -> list:
     or_list = []
     prev_fields = []
 
-    for item in cursor["fields"]:
+    for item in search_cursor["fields"]:
         if "last_val" in item:
             # ...and (
             # artist > last_val
@@ -151,10 +150,10 @@ def _build_cursor_params(cursor) -> list:
   # ]
 # }
 
-def _build_sort_list(cursor) -> list:
+def _build_sort_list(search_cursor) -> list:
     sort_list = []
 
-    for item in cursor["fields"]:
+    for item in search_cursor["fields"]:
         sort_list.append(( item["field"], pymongo.ASCENDING if item["order"] == "asc" else pymongo.DESCENDING ))
 
     return sort_list
