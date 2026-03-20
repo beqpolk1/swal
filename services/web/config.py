@@ -22,9 +22,9 @@ class Config:
 
     DEFAULT_SEARCH_CURSOR = {
         "fields": [
-            { "field": "artist", "order": "asc"},
+            { "field": "artist", "order": "asc" },
             { "field": "album", "order": "asc" },
-            { "field": "_id", "order": "asc",}
+            { "field": "_id", "order": "asc" }
         ]
     }
     CURSOR_FIELD_MAX = 5
