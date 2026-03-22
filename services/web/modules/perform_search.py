@@ -21,12 +21,12 @@ from pprint import pprint
 def perform_search(raw_params, single_mode : bool) -> Search_Result:
     if single_mode:
         parse_func = parse_object_id
-        search_func = _perform_single_search
-        param_func = lambda parsed_params : parsed_params
+        param_func = lambda parsed_params : parsed_params # no parameter processing needed after parsing - echo back result
+        search_func = _perform_single_search        
     else:
         parse_func = parse_search_string
-        search_func = _perform_full_search
         param_func = _prep_search_params
+        search_func = _perform_full_search        
 
     parsed_input = parse_func(raw_params)
     search_result = Search_Result()
