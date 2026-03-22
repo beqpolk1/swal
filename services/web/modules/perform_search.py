@@ -54,18 +54,7 @@ def _perform_full_search(search_params) -> Search_Result:
     for db_result in full_search(search_params):
         search_result.add_result(_db_result_to_entry(db_result))
 
-    if len(search_result.results) > search_params["search_limit"]:
-        search_result.results.pop()
-
-        next_cursor = _build_next_cursor(search_result.results[-1], search_params["search_cursor"])
-        next_cursor_token = util_lib.dict_to_base64_enc(next_cursor)
-        search_result.pages["next"] = next_cursor_token
-
-        prev_cursor = _build_prev_cursor(search_params["search_cursor"])
-        # cur_cursor_token = util_lib.dict_to_base64_enc(search_params["cursor"])
-        # search_result.pages["current"] = cur_cursor_token
-
-    search_result.pages["limit"] = search_params["search_limit"]
+    _fill_in_paging(search_result, search_params)
 
     return search_result
 
@@ -101,6 +90,25 @@ def _prep_search_params(parsed_params) -> dict:
 def _normalize_cursor_field_order(cursor_obj):
     for item in cursor_obj["fields"]:
         if "order" not in item: item["order"] = current_app.config["DEFAULT_SORT_ORDER"]
+
+def _fill_in_paging(search_result, search_params):
+    _add_next_page(search_result, search_params)
+    _add_prev_page(search_result, search_params)
+    search_result.pages["limit"] = search_params["search_limit"]
+
+def _add_next_page(search_result, search_params):
+    if len(search_result.results) > search_params["search_limit"]:
+        search_result.results.pop() # remove last item from results list to match "search_limit" constraint
+
+        # build next search cursor based on new last item
+        next_cursor = _build_next_cursor(search_result.results[-1], search_params["search_cursor"])
+        next_cursor_token = util_lib.dict_to_base64_enc(next_cursor)
+        search_result.pages["next"] = next_cursor_token
+
+def _add_prev_page(search_result, search_params):
+    prev_cursor = _build_prev_cursor(search_params["search_cursor"])
+    # cur_cursor_token = util_lib.dict_to_base64_enc(search_params["cursor"])
+    # search_result.pages["current"] = cur_cursor_token
 
 def _build_next_cursor(last_result, prev_cursor):
     next_cursor = copy.deepcopy(prev_cursor)
