@@ -6,7 +6,8 @@ class Search_Result:
         self.pages = {
             "prev": None,
             "next": None,
-            "limit": None
+            "limit": None,
+            "addl": None
         }
 
     def to_dict(self):

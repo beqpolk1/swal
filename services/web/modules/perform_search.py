@@ -95,6 +95,12 @@ def _fill_in_paging(search_result, search_params):
     _add_next_page(search_result, search_params)
     _add_prev_page(search_result, search_params)
     search_result.pages["limit"] = search_params["search_limit"]
+    search_result.pages["addl"] = search_params["search_params"]
+
+    ### TEMPORARY UGLY FIX
+    if ("is_starred" in search_result.pages["addl"]):
+        search_result.pages["addl"]["starred"] = search_result.pages["addl"]["is_starred"]
+    ### END FIX
 
 def _add_next_page(search_result, search_params):
     if len(search_result.results) > search_params["search_limit"]:

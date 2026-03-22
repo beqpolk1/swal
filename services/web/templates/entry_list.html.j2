@@ -29,7 +29,7 @@
         {% endif %}
 
         {% if data.pages["next"] is not none %}
-        <a href="{{ url_for(endpoint='entries', limit=data.pages['limit'], cursor=data.pages['next']) }}">[next page]</a>
+        <a href="{{ url_for(endpoint='entries', limit=data.pages['limit'], cursor=data.pages['next'], **data.pages['addl']) }}">[next page]</a>
         {% endif %}
         
         {% if data.pages["prev"] is none and data.pages["next"] is none%}
