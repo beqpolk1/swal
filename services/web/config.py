@@ -20,18 +20,22 @@ class Config:
     SEARCH_LIMIT_MAX = 100
     SEARCH_LIMIT_MIN = 1
 
-    DEFAULT_SEARCH_CURSOR = {
-        "fields": [
+    DEFAULT_SEARCH_FIELDS = [
             { "field": "artist", "order": "asc" },
             { "field": "album", "order": "asc" },
             { "field": "_id", "order": "asc" }
         ]
-    }
-    CURSOR_FIELD_MAX = 5
+    INDEX_FIELD_MAX = 5
 
     VALID_SORT_ORDER = ("asc", "desc")
     DEFAULT_SORT_ORDER = "asc"
+    ASC_SORT_VAL = "asc"
+    DESC_SORT_VAL = "desc"
     
+    VALID_SEARCH_DIR = ("fwd", "rev")
+    FWD_SEARCH_VAL = "fwd"
+    REV_SEARCH_VAL = "rev"
+
     MAX_ARTIST_LENGTH = 255
     MAX_ALBUM_LENGTH = 500
     MAX_RELEASE_YEAR = 2150

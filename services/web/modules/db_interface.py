@@ -43,10 +43,14 @@ def add_entry_to_db(new_entry : Entry):
 
 def full_search(params : dict):
     try:
-       find_filter = _build_filter(params["search_params"], params["search_cursor"])
-       search_limit = params["db_limit"]
-       sort_list = _build_sort_list(params["search_cursor"])
-       # print(f"[DEBUG] sort_list = {pprint(sort_list)}", flush=True)
+        search_cursor = params["search_index"].make_search_cursor()
+        find_filter = _build_filter(params["search_params"], search_cursor)
+        sort_list = _build_sort_list(search_cursor)
+
+        search_limit = params["db_limit"]
+        skip = params["skip"]
+
+        # print(f"[DEBUG] sort_list = {pprint(sort_list)}", flush=True)
 
     except Exception as e:
        raise Exception(f"Exception constructing DB query: {e}") from e
@@ -55,7 +59,7 @@ def full_search(params : dict):
         db_conn = get_db(current_app.config["MONGO_DB_NAME"])
         entries = db_conn[current_app.config["MONGO_ENTRIES_COLL"]]
 
-        db_cursor = entries.find(find_filter).limit(search_limit).sort(sort_list).collation(_case_insensitive)
+        db_cursor = entries.find(find_filter).limit(search_limit).sort(sort_list).skip(skip).collation(_case_insensitive)
 
     except ConnectionError as e:
         raise e from e
@@ -81,7 +85,7 @@ def single_search(params : dict):
 def _build_filter(search_params : dict, search_cursor):
     final_list = []
     
-    # print(f"[DEBUG] cursor = {pprint(search_cursor)}", flush=True)
+    # print(f"[DEBUG] cursor = {pprint(search_cursor.fields)}", flush=True)
 
     final_list.extend(_build_search_filters(search_params))
     final_list.extend(_build_cursor_filters(search_cursor))
@@ -119,7 +123,7 @@ def _build_cursor_filters(search_cursor) -> list:
     or_list = []
     prev_fields = []
 
-    for item in search_cursor["fields"]:
+    for item in search_cursor.fields:
         if "last_val" in item:
             # ...and (
             # artist > last_val
@@ -153,7 +157,7 @@ def _build_cursor_filters(search_cursor) -> list:
 def _build_sort_list(search_cursor) -> list:
     sort_list = []
 
-    for item in search_cursor["fields"]:
+    for item in search_cursor.fields:
         sort_list.append(( item["field"], pymongo.ASCENDING if item["order"] == "asc" else pymongo.DESCENDING ))
 
     return sort_list
