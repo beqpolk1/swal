@@ -1,7 +1,6 @@
 * Finish building out MVP search/browse
   * Placeholder album art
-  * What is difference bt. trailing/no trailing slash?
-  
+
 
 * TECH-DEBT CLEANUP
 * Finish building out addtional sort/filter/search criteria
