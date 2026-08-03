@@ -15,7 +15,7 @@
         <div class="top_menu">
             <a href="{{ url_for('index') }}" class="top_menu_item"><div class="top_menu_item_text">Home</div></a>
             <a href="{{ url_for(endpoint = 'add_entry', _method = 'GET', mode = 'single') }}" class="top_menu_item"><div class="top_menu_item_text">Add Entry</div></a>
-            <a href="#" class="top_menu_item"><div class="top_menu_item_text">Browse Entries</div></a>
+            <a href="{{ url_for(endpoint = 'entries', _method = 'GET')}}" class="top_menu_item"><div class="top_menu_item_text">Browse Entries</div></a>
         </div>
     </nav>
 </div>

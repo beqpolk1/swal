@@ -1,0 +1,15 @@
+TECH-DEBT TODO:
+- separate out Werkzeug MultiDict access utilities
+- DB interface error msg's need to come from error_library
+- update references in existing validator
+- refactor "validator" to be "parser"
+- make true/false sets constants
+- refactor usage of 'Entry'
+  - Does it need to take separate arg for files & *stores* its file with it
+  - Propagate field name changes
+  - do more testing that add still works & is clean
+  - Redirect "add" result to single entry display
+- ADD LOGGING
+- re-org "modules" to differentiate display/templating ones vs. processing ones
+- add "normalized" fields for sorting and get rid of collations
+- don't use mutable defaults for class constructors (e.g. list & dict) - use data field factory

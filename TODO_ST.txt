@@ -1,0 +1,5 @@
+* TECH-DEBT CLEANUP
+* Finish building out addtional sort/filter/search criteria
+* Add index(es?) to MongoDB for sorting/searching
+
+

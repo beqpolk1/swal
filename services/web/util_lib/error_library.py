@@ -1,3 +1,30 @@
+####### SEARCH/FILTER VALIDATION MESSAGES #######
+GENERAL_SEARCH_EXCEPTION = "Exception performing search: {exception}"
+
+SEARCH_PARSE_EXCEPTION = "Exception parsing {param} parameter: {exception}"
+SEARCH_TEXT_TOO_SHORT = "Text search string must be {length} characters or more"
+SEARCH_TEXT_TOO_LONG = "Text search string must be {length} characters or less"
+
+SEARCH_LIMIT_OUT_OF_BOUNDS = "Limit on search results must be more than {min} and less than {max}"
+
+INDEX_BASE64_DECODE_EXCEPTION = "Exception decoding index from base64: {exception}"
+INDEX_TEXT_DECODE_EXCEPTION = "Exception decoding index to utf-8 text: {exception}"
+INDEX_JSON_DECODE_EXCEPTION = "Exception decoding index text to JSON: {exception}"
+
+INDEX_NOT_DICTIONARY = "Pagination index must be a dictionary"
+INDEX_DOESNT_HAVE_FIELDS = "Pagination index must contain element 'fields'"
+INDEX_FIELDS_NOT_LIST = "Pagination index 'fields' element must be a list type"
+INDEX_TOO_MANY_FIELDS = "Pagination index 'fields' element must have {max} elements or less"
+INDEX_DOESNT_HAVE_DIR = "Pagination index must contain element 'direction'"
+INDEX_DIR_NOT_STR = "Pagination index 'direction' element must be a string type"
+
+CURSOR_FIELD_ITEM_NOT_DICT = "Pagination cursor 'fields' element {element} is not a dictionary"
+CURSOR_FIELD_ITEM_MISSING_FIELD = "Pagination cursor 'fields' element {element} does not have 'field' property"
+CURSOR_FIELD_ITEM_INVALID_ORDER = "Pagination cursor 'fields' element {element} has an invalid ordering value"
+
+OBJECT_ID_REQUIRED = "Object ID must be present"
+INVALID_OBJECT_ID = "Exception parsing _id value: {exception}"
+
 ####### ENTRY VALIDATION MESSAGES #######
 ARTIST_MUST_BE_STRING = "Artist name must be a string"
 ARTIST_TOO_LONG = "Artist name must be {length} characters or less"

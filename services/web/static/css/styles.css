@@ -6,8 +6,16 @@ body {
     display: none;
 }
 
+div.header {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    background-color: white;
+    padding-top: 10px
+}
+
 div.top_banner {
-    margin: 10px 10px 0px 10px;
+    margin: 0px 10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -112,4 +120,188 @@ div.artwork > img {
 div.form_upload > p {
     font-style: italic;
     font-size: .9em;
+}
+
+div.entry_card_list {
+    width: 96%;
+    padding: 0px 2%;
+}
+
+div.pagination {
+    margin-bottom: 80px
+}
+
+div.entry_card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #333333;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+div.entry_card_starred_ind {
+    width: 5%;
+    text-align: center;
+}
+
+.starred_ind {
+    font-size: 2rem;
+}
+
+.starred {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+div.entry_card_link_wrapper {
+    width: 30%;
+}
+
+a.entry_card_link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+a.entry_card_link:hover {
+    transform: translateY(-5px);
+}
+
+a.entry_card_link:visited {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+div.entry_card_artwork {
+    width: 50%;
+}
+
+div.entry_card_artwork > img {
+    max-width: 100%;
+    max-height: 150px;
+    height: auto;
+    display: block;
+    align-content: center;
+}
+
+div.entry_card_title {
+    margin: 0px 5% 0px 2%;
+}
+
+div.entry_card_title_artist {
+    margin-bottom: 5px;
+}
+
+span.entry_emph_1 {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+span.entry_emph_2 {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+div.entry_card_genre {
+    width: 15%;
+    font-size: 1.3rem;
+}
+
+span.none_field {
+    color: slategray;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+div.entry_card_release_year {
+    width: 15%;
+    font-size: 1.3rem;
+}
+
+div.entry_card_interest_level {
+    width: 15%;
+    font-size: 1.3rem;
+}
+
+div.entry_card_link {
+    width: 5%;
+    font-size: 2rem;
+    color: slategray;
+}
+
+div.entry_card_link > a, div.entry_panel_info_bot a {
+    color: black;
+    text-decoration-line: none;
+}
+
+div.entry_card_link > a:visited, div.entry_panel_info_bot a:visited {
+    color: black;
+}
+
+div.entry_card_link > a:hover, div.entry_panel_info_bot a:hover {
+    color: rgb(74, 74, 180);
+}
+
+div.entry_panel {
+    width: 96%;
+    padding: 10px 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.entry_panel_artwork {
+    width: 30%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+div.entry_panel_artwork > img {
+    max-height: 300px;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    display: block;
+}
+
+div.entry_panel_info {
+    width: 60%;
+}
+
+div.entry_panel_info_top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.entry_panel_info_title {
+    width: 50%;
+    font-size: 1.2rem;
+}
+
+div.entry_panel_info_properties {
+    width: 50%;
+    font-size: 1.2rem;
+}
+
+.obtained_ind {
+    font-size: 2rem;
+}
+
+div.entry_panel_info_bot {
+    margin-top: 25px;
+    font-size: 1.2rem;
+}
+
+div.entry_panel_info_bot > div {
+    margin-top: 10px;
 }

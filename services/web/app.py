@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for
 from pymongo import MongoClient
-from modules import index, add_entry
+from modules import index, add_entry, entries
 import os
 
 def create_app():
@@ -21,7 +21,8 @@ def create_app():
             'JS_STATIC_DIR': app.config['JS_STATIC_DIR'],
             'IMG_STATIC_DIR': app.config['IMG_STATIC_DIR'],
             'CSS_STATIC_DIR': app.config['CSS_STATIC_DIR'],
-            'LOGO_IMG': app.config['LOGO_IMG']
+            'LOGO_IMG': app.config['LOGO_IMG'],
+            'DEFAULT_ART': app.config['DEFAULT_ART']
         }
 
     ################################################
@@ -52,6 +53,8 @@ def create_app():
 
     app.add_url_rule('/', 'index', index, methods = ['GET'])
     app.add_url_rule('/add_entry/<string:mode>', 'add_entry', add_entry, methods = ['GET', 'POST'])
+    app.add_url_rule('/entries', 'entries', entries, methods = ['GET'])
+    app.add_url_rule('/entries/<string:_id>', 'entries', entries, methods = ['GET'])
 
     return app
 
