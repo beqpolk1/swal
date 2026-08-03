@@ -9,7 +9,7 @@
                 {% if entry.artwork_file %}
                 <img src="{{ macros.media_file(MEDIA_IMG_DIR, entry.artwork_file_name) }}">
                 {% else %}
-                [none]
+                <img src="{{ macros.static_file(IMG_STATIC_DIR, DEFAULT_ART) }}">
                 {% endif %}
             </div>
         

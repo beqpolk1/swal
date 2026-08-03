@@ -5,6 +5,7 @@ class Config:
     CSS_STATIC_DIR = "css"
 
     LOGO_IMG = "swallow_small.jpg"
+    DEFAULT_ART = "unknown_art.jpg"
     
     MONGO_CONN_STR = "mongodb://mongoadmin:secret@db:27017/"
     MONGO_CONN_TIMEOUT = 2000
